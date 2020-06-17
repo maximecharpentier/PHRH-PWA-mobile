@@ -5,7 +5,7 @@ import { Icon, Button } from "react-native-elements";
 export default function PlannerHeader() {
   const [isStarted, setIsStarted] = useState(false);
   return (
-    <View style={styles.container}>
+    <View>
       <View style={styles.header}>
         <View style={styles.center1}>
           <Text style={styles.month}>Mai 2020</Text>
