@@ -3,7 +3,7 @@
   "displayName": "PHRH-PWA-mobile",
   "expo": {
     "name": "PHRH-PWA-mobile",
-    "slug": "expo-template-bare",
+    "slug": "phrh-pwa-mobile",
     "version": "1.0.0",
     "platforms": [
       "ios",
@@ -12,6 +12,8 @@
     ],
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "description": " The companion app for PHRH-PWA ",
+    "githubUrl": "https://github.com/blyndusk/PHRH-PWA-mobile"
   }
 }
