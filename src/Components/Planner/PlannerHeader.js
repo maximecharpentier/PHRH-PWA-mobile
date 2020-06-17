@@ -1,20 +1,18 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Icon, Button } from "react-native-elements";
-import { create } from "react-test-renderer";
 
-export default function Planner() {
+export default function PlannerHeader() {
   const [isStarted, setIsStarted] = useState(false);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.center1}>
-          <Text style={sHeader.month}>Mai 2020</Text>
-          <Text style={sHeader.label}>Jour</Text>
+          <Text style={styles.month}>Mai 2020</Text>
+          <Text style={styles.label}>Jour</Text>
         </View>
         <View style={styles.center2}>
           <Icon name="calendar-alt" type="font-awesome-5" size={18} />
-
           <Button
             title={isStarted ? "Fin" : "Debut"}
             titleStyle={{ ...rawStyles.headerBtn.title }}
@@ -41,7 +39,22 @@ export default function Planner() {
           />
         </View>
       </View>
-      <Image style={styles.logo} source={require("../../assets/logo.png")} />
+      <View style={styles.nav}>
+        <View style={styles.center1}>
+          <Button
+            buttonStyle={{ ...rawStyles.nav.btn }}
+            icon={<Icon name="chevron-left" type="font-awesome-5" size={12} />}
+          />
+          <Text style={styles.changeWeekText}>11 Mai - 16 Mai</Text>
+          <Button
+            buttonStyle={{ ...rawStyles.nav.btn }}
+            icon={<Icon name="chevron-right" type="font-awesome-5" size={12} />}
+          />
+        </View>
+        <View style={styles.center2}>
+          <Text style={styles.label}>Temps de trajet</Text>
+        </View>
+      </View>
     </View>
   );
 }
@@ -52,8 +65,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-
+    backgroundColor: "#ffffff",
     padding: 15,
+    borderBottomColor: "#E0E0E0",
+    borderBottomWidth: 1,
   },
   center1: {
     flex: 1,
@@ -67,9 +82,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-end",
   },
-});
-
-const sHeader = StyleSheet.create({
+  nav: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#ffffff",
+    padding: 15,
+  },
   month: {
     color: "#111215",
     fontWeight: "bold",
@@ -82,7 +102,9 @@ const sHeader = StyleSheet.create({
     paddingVertical: 3,
     fontSize: 12,
     marginHorizontal: 15,
-    // height: 20,
+  },
+  changeWeekText: {
+    fontSize: 12,
   },
 });
 
@@ -98,6 +120,11 @@ const rawStyles = {
       paddingVertical: 6,
       paddingHorizontal: 8,
       marginLeft: 10,
+    },
+  },
+  nav: {
+    btn: {
+      backgroundColor: "none",
     },
   },
 };
