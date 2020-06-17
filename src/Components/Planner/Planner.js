@@ -1,9 +1,10 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { Icon, Button } from "react-native-elements";
 import { create } from "react-test-renderer";
 
 export default function Planner() {
+  const [isStarted, setIsStarted] = useState(false);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -15,18 +16,28 @@ export default function Planner() {
           <Icon name="calendar-alt" type="font-awesome-5" size={18} />
 
           <Button
-            title="Debut"
+            title={isStarted ? "Fin" : "Debut"}
             titleStyle={{ ...rawStyles.headerBtn.title }}
             buttonStyle={{ ...rawStyles.headerBtn.btn }}
             iconRight={true}
             icon={
-              <Icon
-                name="toggle-on"
-                type="font-awesome-5"
-                color="#0de029"
-                size={20}
-              />
+              isStarted ? (
+                <Icon
+                  name="toggle-on"
+                  type="font-awesome-5"
+                  color="#0de029"
+                  size={20}
+                />
+              ) : (
+                <Icon
+                  name="toggle-off"
+                  type="font-awesome-5"
+                  color="#bf2f00"
+                  size={20}
+                />
+              )
             }
+            onPress={() => setIsStarted(!isStarted)}
           />
         </View>
       </View>
