@@ -2,13 +2,15 @@ import * as React from "react";
 import { StyleSheet, View, Text } from "react-native";
 
 import Header from "../Components/Helpers/Header";
-import Planner from "../Components/Planner/Planner";
+import PlannerHeader from "../Components/Planner/PlannerHeader";
+import PlannerDays from "../Components/Planner/PlannerDays";
 
 export default function AuthPage() {
   return (
     <View style={styles.view}>
       <Header />
-      <Planner/>
+      <PlannerHeader/>
+      <PlannerDays/>
     </View>
   );
 }
