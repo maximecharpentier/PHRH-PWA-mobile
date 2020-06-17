@@ -1,41 +1,42 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { ListItem } from "react-native-elements";
-import { round } from "react-native-reanimated";
+import { Button, Icon } from "react-native-elements";
 
-export default function PlannerDay() {
-  const hotels = [
-    {
-      name: "Lafayette",
-      zip: 75010,
-      isUrgence: true,
-    },
-    {
-      name: "Lafayette",
-      zip: 75010,
-      isUrgence: true,
-    },
-    {
-      name: "Lafayette",
-      zip: 75010,
-      isUrgence: true,
-    },
-    {
-      name: "Lafayette",
-      zip: 75010,
-      isUrgence: true,
-    },
-    {
-      name: "Lafayette",
-      zip: 75010,
-      isUrgence: true,
-    },
-    {
-      name: "Lafayette",
-      zip: 75010,
-      isUrgence: true,
-    },
-  ];
+const PlannerDay = ({hotels}) => {
+  
+  
+  // const hotels = [
+  //   {
+  //     name: "Lafayette",
+  //     zip: 75010,
+  //     isUrgence: true,
+  //   },
+  //   {
+  //     name: "Lafayette",
+  //     zip: 75010,
+  //     isUrgence: false,
+  //   },
+  //   {
+  //     name: "Lafayette",
+  //     zip: 75010,
+  //     isUrgence: false,
+  //   },
+  //   {
+  //     name: "Lafayette",
+  //     zip: 75010,
+  //     isUrgence: true,
+  //   },
+  //   {
+  //     name: "Lafayette",
+  //     zip: 75010,
+  //     isUrgence: false,
+  //   },
+  //   {
+  //     name: "Lafayette",
+  //     zip: 75010,
+  //     isUrgence: true,
+  //   },
+  // ];
   return (
     <View>
       <View style={styles.header}>
@@ -49,8 +50,28 @@ export default function PlannerDay() {
       <View style={styles.days}>
         {hotels.map((l, i) => (
           <View key={i} style={styles.dayCard}>
-            <Text style={styles.hotelName}>{l.name}</Text>
-            <Text style={styles.hotelZip}>{l.zip}</Text>
+            <View style={styles.center1}>
+              <Text style={styles.hotelName}>{l.name}</Text>
+              <Text style={styles.hotelZip}>{l.zip}</Text>
+            </View>
+            {l.isUrgence ? (
+              <View style={styles.center2}>
+                <Button
+                  title="Urgence"
+                  titleStyle={{ ...rawStyles.urgence.title }}
+                  buttonStyle={{ ...rawStyles.urgence.btn }}
+                  icon={
+                    <Icon
+                      name="exclamation-triangle"
+                      type="font-awesome-5"
+                      color="#EA2430"
+                      size={12}
+                    />
+                  }
+                  onPress={() => setIsStarted(!isStarted)}
+                />
+              </View>
+            ) : null}
           </View>
         ))}
       </View>
@@ -113,4 +134,25 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "bold",
   },
+  hotelZip: {
+    marginLeft: 10,
+  },
 });
+
+const rawStyles = {
+  urgence: {
+    title: {
+      color: "#EA2430",
+      fontSize: 12,
+      fontWeight: "bold",
+      marginLeft: 6,
+    },
+    btn: {
+      backgroundColor: "rgba(234, 36, 48, 0.24)",
+      borderRadius: 4,
+    },
+  },
+};
+
+
+export default PlannerDay;
