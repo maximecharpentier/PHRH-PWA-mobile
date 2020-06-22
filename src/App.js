@@ -10,5 +10,16 @@ const instructions = Platform.select({
 });
 
 export default function App() {
-  return <PlannerPage />;
+  return (
+    <View style={styles.view}>
+      <PlannerPage />
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  view: {
+    backgroundColor: "red",
+    height: "100vh"
+  },
+});
