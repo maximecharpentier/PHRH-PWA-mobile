@@ -3,6 +3,7 @@ import { Platform, StyleSheet, Text, View, Image } from "react-native";
 
 import AuthPage from "./Pages/Auth.page";
 import PlannerPage from "./Pages/Planner.page";
+import HotelPage from "./Pages/Hotel.page";
 
 const instructions = Platform.select({
   ios: `Press Cmd+R to reload,\nCmd+D or shake for dev menu`,
@@ -10,5 +11,16 @@ const instructions = Platform.select({
 });
 
 export default function App() {
-  return <PlannerPage />;
+  return (
+    <View style={styles.view}>
+      <HotelPage />
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  view: {
+    backgroundColor: "#FAFAFA",
+    height: "100vh"
+  },
+});
