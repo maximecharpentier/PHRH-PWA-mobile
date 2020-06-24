@@ -2,19 +2,19 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 
 import Header from "../Components/Helpers/Header";
-import Hotel from "../Components/Hotel/Hotel"
+import Memos from "../Components/Memos/Memos"
 
-export default function HotelPage() {
+export default function MemosPage() {
   return (
-    <View styles={styles.hotelPage}>
+    <View styles={styles.memosPage}>
       <Header />
-      <Hotel />
+      <Memos />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  hotelPage: {
+  memosPage: {
     flex: 1,
     flexDirection: "column"
   }
