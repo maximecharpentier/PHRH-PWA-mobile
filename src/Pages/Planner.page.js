@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, ScrollView, Text } from "react-native";
 
 import Header from "../Components/Helpers/Header";
 import PlannerHeader from "../Components/Planner/PlannerHeader";
@@ -7,11 +7,11 @@ import PlannerDays from "../Components/Planner/PlannerDays";
 
 export default function AuthPage() {
   return (
-    <View style={styles.view}>
+    <ScrollView style={styles.view}>
       <Header />
       <PlannerHeader/>
       <PlannerDays/>
-    </View>
+    </ScrollView>
   );
 }
 

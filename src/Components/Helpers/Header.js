@@ -12,14 +12,13 @@ export default function Header() {
 const styles = StyleSheet.create({
   container: {
     marginTop: Platform.OS === 'android' ? 20 : 0,
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#031772",
-    padding: Platform.OS === 'android' ? 35 : 15
+    padding: 15
   },
   logo: {
-    width: 130,
-    height: 35,
+    width: 80,
+    height: 22,
   },
 });

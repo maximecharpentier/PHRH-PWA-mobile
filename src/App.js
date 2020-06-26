@@ -10,7 +10,6 @@ import PlannerPage from "./Pages/Planner.page";
 import ProfilePage from "./Pages/Profile.page"
 import NotificationPage from "./Pages/Notification.page"
 
-
 const Tab = createBottomTabNavigator();
 
 const instructions = Platform.select({
@@ -26,24 +25,31 @@ const App = () => (
           let iconName;
 
           if (route.name === 'Home') {
-            iconName =  'md-home';
+            iconName = 'md-home';
           } else if (route.name === 'Memo') {
-            iconName =  'md-menu';
+            iconName = 'md-menu';
           } else if (route.name === 'Profile') {
-            iconName =  'account-circle';
+            iconName = 'account-circle';
           } else if (route.name === 'Notification') {
-            iconName =  'md-notifications';
+            iconName = 'md-notifications';
           }
-           if (route.name === 'Profile') {
-            return  <MaterialIcons name={iconName} size={size} color={color} />;
+          if (route.name === 'Profile') {
+            return <MaterialIcons name={iconName} size={30} color={color} />;
           } else {
-            return <Ionicons name={iconName} size={size} color={color} />;
+            return <Ionicons name={iconName} size={30} color={color} />;
           }
         },
       })}
       tabBarOptions={{
         activeTintColor: '#000000',
         inactiveTintColor: '#A1B5D8',
+        showLabel: false,
+        keyboardHidesTabBar: true,
+        tabStyle: {
+          borderTopColor: "#000000",
+          borderTopWidth: 1,
+          backgroundColor: '#EFF2FB'
+        }
       }}
     >
       <Tab.Screen name="Home" component={PlannerPage} />
