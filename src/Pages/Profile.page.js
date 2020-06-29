@@ -2,29 +2,23 @@ import * as React from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 
 import ProfileHeader from '../Components/Profile/ProfileHeader'
+import ProfileInfos from '../Components/Profile/ProfileInfos'
+import ProfileSchedule from '../Components/Profile/ProfileSchedule'
 
 export default function ProfilePage() {
   return (
-    <ScrollView style={styles.view}>
-      <ProfileHeader />
+    <ScrollView style={styles.view} contentContainerStyle={{flexGrow:1}}>
+      <ProfileHeader title="Profil" />
+      <ProfileInfos />
+      <ProfileHeader title="Indisponibilités" />
+      <ProfileSchedule />
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  h1: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginTop: 40,
-    textAlign: "center",
-  },
-  h2: {
-    fontSize: 14,
-    marginTop: 10,
-    marginBottom: 50,
-    textAlign: "center",
-  },
   view: {
-    backgroundColor: "#e5e5e5",
+    height: 100,
+    backgroundColor: "#FAFAFA",
   },
 });
