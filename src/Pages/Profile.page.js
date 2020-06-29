@@ -6,7 +6,6 @@ import Header from "../Components/Helpers/Header";
 export default function ProfilePage() {
   return (
     <View style={styles.view}>
-      <Header />
       <Text>Profile</Text>
     </View>
   );

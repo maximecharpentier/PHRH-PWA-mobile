@@ -5,10 +5,12 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+import Header from "./Components/Helpers/Header";
 import AuthPage from "./Pages/Auth.page";
 import PlannerPage from "./Pages/Planner.page";
 import ProfilePage from "./Pages/Profile.page"
 import NotificationPage from "./Pages/Notification.page"
+
 
 const Tab = createBottomTabNavigator();
 
@@ -18,6 +20,8 @@ const instructions = Platform.select({
 });
 
 const App = () => (
+  <>
+  <Header />
   <NavigationContainer>
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -59,6 +63,7 @@ const App = () => (
     </Tab.Navigator>
 
   </NavigationContainer>
+  </>
 
 )
 

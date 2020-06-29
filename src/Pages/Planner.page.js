@@ -1,14 +1,15 @@
 import * as React from "react";
 import { StyleSheet, View, ScrollView, Text } from "react-native";
 
-import Header from "../Components/Helpers/Header";
 import PlannerHeader from "../Components/Planner/PlannerHeader";
 import PlannerDays from "../Components/Planner/PlannerDays";
+
+import Constants from 'expo-constants';
+
 
 export default function AuthPage() {
   return (
     <ScrollView style={styles.view}>
-      <Header />
       <PlannerHeader/>
       <PlannerDays/>
     </ScrollView>

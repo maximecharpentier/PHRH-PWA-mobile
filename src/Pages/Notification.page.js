@@ -6,7 +6,6 @@ import Header from "../Components/Helpers/Header";
 export default function NotificationPage() {
   return (
     <View style={styles.view}>
-      <Header />
       <Text>Notification</Text>
     </View>
   );

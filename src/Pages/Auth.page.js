@@ -7,7 +7,6 @@ import AuthForm from "../Components/Forms/AuthForm";
 export default function AuthPage() {
   return (
     <View style={styles.view}>
-      <Header />
       <Text style={styles.h1}>Connexion</Text>
       <Text style={styles.h2}>Pour continuer, connectez-vous</Text>
       <AuthForm />
