@@ -14,7 +14,7 @@ const instructions = Platform.select({
 export default function App() {
   return (
     <View style={styles.view}>
-      <MemosPage />
+      <HotelPage />
     </View>
   );
 }

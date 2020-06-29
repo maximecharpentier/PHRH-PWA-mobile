@@ -1,8 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import { Icon, Button } from "react-native-elements";
+import axios from 'axios';
 
 export default function Hotel() {
+
+  const [hotelInformations, setHotelInformations] = useState({
+    adress: "26 Avenue Descartes",
+    zipcode: "75619",
+    city: "Paris",
+    sector: "75",
+    currentNotation: "30.51",
+    lastVisit: "19/04/2019",
+    occupedRooms: 20,
+    availableRooms: 10,
+    urgencyDescription: "Les occupants de la chambre ont constatés des traces de moisissure. Ils affirment que le logement est plein d’humidité, l’air ne circule pas correctement."
+  })
+
   return (
     <View style={styles.hotel}>
       <View style={styles.header}>
@@ -17,35 +31,35 @@ export default function Hotel() {
         <View style={styles.cardContainerFix}>
           <View style={styles.cardItemLarge}>
             <Text style={styles.cardTitle}>Adresse</Text>
-            <Text style={styles.cardText}>198 rue Lafayette</Text>
-            <Text style={styles.cardText}>75010 Paris</Text>
+            <Text style={styles.cardText}>{hotelInformations.adress}</Text>
+            <Text style={styles.cardText}>{hotelInformations.zipcode} {hotelInformations.city}</Text>
           </View>
           <View style={styles.cardItemSmall}>
             <Text style={styles.cardTitle}>Secteur</Text>
-            <Text style={styles.cardText}>75</Text>
+            <Text style={styles.cardText}>{hotelInformations.sector}</Text>
           </View>
         </View>
         <View style={styles.cardContainer}>
           <View style={styles.cardItemLarge}>
             <Text style={styles.cardTitle}>Note de la dernière visite</Text>
-            <Text style={styles.cardText}>30.51</Text>
+            <Text style={styles.cardText}>{hotelInformations.currentNotation}</Text>
           </View>
           <View style={styles.cardItemSmall}>
             <Text style={styles.cardTitle}>Dernière visite</Text>
-            <Text style={styles.cardText}>19/04/2019</Text>
+            <Text style={styles.cardText}>{hotelInformations.lastVisit}</Text>
           </View>
         </View>
         <View style={styles.cardContainerLastChild}>
           <View style={styles.cardItemFull}>
             <Text style={styles.cardTitle}>Nombre de chambres</Text>
-            <Text style={styles.cardText}>20 occupés / 10 disponibles</Text>
+            <Text style={styles.cardText}>{hotelInformations.occupedRooms} occupés / {hotelInformations.availableRooms} disponibles</Text>
           </View>
         </View>
       </View>
       <Text style={styles.hotelTitle}>Urgence</Text>
       <View style={styles.card}>
         <Text style={styles.cardTitleUrgency}>Descriptif de l'urgence</Text>
-        <Text style={styles.cardTextUrgency}>Les occupants de la chambre ont constatés des traces de moisissure. Ils affirment que le logement est plein d’humidité, l’air ne circule pas correctement.</Text>
+        <Text style={styles.cardTextUrgency}>{hotelInformations.urgencyDescription}</Text>
       </View>
       <View style={styles.hotelContainer}>
         <View style={styles.button}>
