@@ -1,13 +1,13 @@
 import * as React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
 
-import Header from "../Components/Helpers/Header";
+import ProfileHeader from '../Components/Profile/ProfileHeader'
 
 export default function ProfilePage() {
   return (
-    <View style={styles.view}>
-      <Text>Profile</Text>
-    </View>
+    <ScrollView style={styles.view}>
+      <ProfileHeader />
+    </ScrollView>
   );
 }
 
