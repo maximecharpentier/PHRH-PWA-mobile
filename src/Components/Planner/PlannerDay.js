@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#FFFFFF",
-    boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.15)",
+    // boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.15)",
     borderRadius: 4,
     paddingVertical: 11,
     paddingHorizontal: 16,

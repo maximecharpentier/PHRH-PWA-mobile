@@ -2,14 +2,11 @@ import * as React from "react";
 import { StyleSheet, View, Text } from "react-native";
 
 import Header from "../Components/Helpers/Header";
-import AuthForm from "../Components/Forms/AuthForm";
 
-export default function AuthPage() {
+export default function NotificationPage() {
   return (
     <View style={styles.view}>
-      <Text style={styles.h1}>Connexion</Text>
-      <Text style={styles.h2}>Pour continuer, connectez-vous</Text>
-      <AuthForm />
+      <Text>Notification</Text>
     </View>
   );
 }
