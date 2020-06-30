@@ -18,9 +18,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Header from "./Components/Helpers/Header";
 import AuthPage from "./Pages/Auth.page";
+
 import PlannerPage from "./Pages/Planner.page";
 import ProfilePage from "./Pages/Profile.page"
 import NotificationPage from "./Pages/Notification.page"
+import HotelPage from "./Pages/Hotel.page";
+import MemosPage from "./Pages/Memos.page";
 
 
 const Tab = createBottomTabNavigator();
@@ -82,7 +85,7 @@ const App = () => {
           }}
         >
           <Tab.Screen name="Home" component={PlannerPage} />
-          <Tab.Screen name="Memo" component={PlannerPage} />
+          <Tab.Screen name="Memo" component={MemosPage} />
           <Tab.Screen name="Profile" component={ProfilePage} />
           <Tab.Screen name="Notification" component={NotificationPage} />
         </Tab.Navigator>
@@ -95,3 +98,10 @@ const App = () => {
 
 
 export default App;
+
+// const styles = StyleSheet.create({
+//   view: {
+//     backgroundColor: "#FAFAFA",
+//     height: "100vh"
+//   },
+// });
