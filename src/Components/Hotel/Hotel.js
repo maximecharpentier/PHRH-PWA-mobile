@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet, Text, View, TextInput, ScrollView } from "react-native";
 import { Icon, Button } from "react-native-elements";
 import axios from 'axios';
 
@@ -18,14 +18,14 @@ export default function Hotel() {
   })
 
   return (
-    <View style={styles.hotel}>
-      <View style={styles.header}>
+    <ScrollView style={styles.hotel}>
+      {/* <View style={styles.header}>
         <Button
           buttonStyle={styles.headerButton}
           icon={<Icon style={styles.headerIcon} name="angle-left" type="font-awesome-5" size={23} />}
         />
         <Text style={styles.headerTitle}>Lafayette</Text>
-      </View>
+      </View> */}
       <Text style={styles.hotelTitle}>Informations sur l'hôtel</Text>
       <View style={styles.card}>
         <View style={styles.cardContainerFix}>
@@ -91,7 +91,7 @@ export default function Hotel() {
         <Icon style={styles.notificationIcon} color="#222222" name="check" type="font-awesome-5" size={12} />
         <Text style={styles.notificationText}>Votre mémo a été enregistré.</Text>
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
@@ -120,15 +120,15 @@ const styles = StyleSheet.create({
   headerTitle: {
     position: "absolute",
     left: "50%",
-    transform: "translateX(-50%)",
+    // transform: "translateX(-50%)",
     fontSize: 16,
-    fontWeight: 500,
+    fontWeight: "500",
     lineHeight: 24
   },
   hotelTitle: {
     color: "#031772",
     fontSize: 18,
-    fontWeight: 500,
+    fontWeight: "500",
     lineHeight: 27,
     padding: 16
   },
@@ -172,12 +172,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 21,
     color: "#000",
-    fontWeight: 500
+    fontWeight: "500"
   },
   cardTitleUrgency: {
     marginBottom: 8,
     fontSize: 14,
-    fontWeight: 500,
+    fontWeight: "500",
     lineHeight: 21,
     color: "#000"
   },
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 12,
-    fontWeight: 500,
+    fontWeight: "500",
     color: "#000",
     paddingLeft: 12,
     paddingTop: 0
@@ -251,12 +251,12 @@ const styles = StyleSheet.create({
   },
   formButtonFirstChildTitle: {
     fontSize: 12,
-    fontWeight: 500,
+    fontWeight: "500",
     color: "#111215"
   },
   formButtonLastChildTitle: {
     fontSize: 12,
-    fontWeight: 500,
+    fontWeight: "500",
     color: "#FFF"
   },
   notification: {
@@ -271,23 +271,23 @@ const styles = StyleSheet.create({
     marginRight: "auto",
     flexDirection: "row",
     alignItems: "center",
-    position: "fixed",
+    // position: "fixed",
     bottom: 88,
     left: "50%",
-    transform: "translateX(-50%)",
+    // transform: "translateX(-50%)",
     width: 224
   },
   notificationIcon: {
     color: "#FFF",
     backgroundColor: "#FFF",
-    borderRadius: "50%",
+    borderRadius: 50,
     borderWidth: 2,
     borderColor: "#FFF"
   },
   notificationText: {
     color: "#FFF",
     fontSize: 12,
-    fontWeight: 500,
+    fontWeight: "500",
     paddingLeft: 8
   }
 })

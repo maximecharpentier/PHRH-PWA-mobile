@@ -7,7 +7,6 @@ import Memos from "../Components/Memos/Memos"
 export default function MemosPage() {
   return (
     <View styles={styles.memosPage}>
-      <Header />
       <Memos />
     </View>
   );

@@ -9,31 +9,31 @@ const planning = {
       zip: 75010,
       isUrgence: true,
     },
-    // {
-    //   name: "Lafayette",
-    //   zip: 75010,
-    //   isUrgence: false,
-    // },
-    // {
-    //   name: "Lafayette",
-    //   zip: 75010,
-    //   isUrgence: false,
-    // },
-    // {
-    //   name: "Lafayette",
-    //   zip: 75010,
-    //   isUrgence: true,
-    // },
-    // {
-    //   name: "Lafayette",
-    //   zip: 75010,
-    //   isUrgence: false,
-    // },
-    // {
-    //   name: "Lafayette",
-    //   zip: 75010,
-    //   isUrgence: true,
-    // },
+    {
+      name: "Lafayette",
+      zip: 75010,
+      isUrgence: false,
+    },
+    {
+      name: "Lafayette",
+      zip: 75010,
+      isUrgence: false,
+    },
+    {
+      name: "Lafayette",
+      zip: 75010,
+      isUrgence: true,
+    },
+    {
+      name: "Lafayette",
+      zip: 75010,
+      isUrgence: false,
+    },
+    {
+      name: "Lafayette",
+      zip: 75010,
+      isUrgence: true,
+    },
   ],
   160620: [
     {
@@ -41,31 +41,31 @@ const planning = {
       zip: 75010,
       isUrgence: false,
     },
-    // {
-    //   name: "Lafayette",
-    //   zip: 75010,
-    //   isUrgence: false,
-    // },
-    // {
-    //   name: "Lafayette",
-    //   zip: 75010,
-    //   isUrgence: true,
-    // },
-    // {
-    //   name: "Lafayette",
-    //   zip: 75010,
-    //   isUrgence: true,
-    // },
-    // {
-    //   name: "Lafayette",
-    //   zip: 75010,
-    //   isUrgence: false,
-    // },
-    // {
-    //   name: "Lafayette",
-    //   zip: 75010,
-    //   isUrgence: true,
-    // },
+    {
+      name: "Lafayette",
+      zip: 75010,
+      isUrgence: false,
+    },
+    {
+      name: "Lafayette",
+      zip: 75010,
+      isUrgence: true,
+    },
+    {
+      name: "Lafayette",
+      zip: 75010,
+      isUrgence: true,
+    },
+    {
+      name: "Lafayette",
+      zip: 75010,
+      isUrgence: false,
+    },
+    {
+      name: "Lafayette",
+      zip: 75010,
+      isUrgence: true,
+    },
   ],
 }
 

@@ -3,10 +3,10 @@ import { StyleSheet, Text, View } from "react-native";
 import { Icon, Button } from "react-native-elements";
 import { MyAppText, textStyles } from "../Texts/MyAppText";
 
-export default function ProfileHeader({title}) {
+export default function ProfileHeader({route, title}) {
   return (
       <View style={styles.header}>
-          <MyAppText style={styles.title}>{title}</MyAppText>
+          <MyAppText onPress={() => console.log(route.params)} style={styles.title}>{title}</MyAppText>
       </View>
   );
 }

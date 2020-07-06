@@ -6,10 +6,7 @@ import Hotel from "../Components/Hotel/Hotel"
 
 export default function HotelPage() {
   return (
-    <View styles={styles.hotelPage}>
-      <Header />
       <Hotel />
-    </View>
   );
 }
 

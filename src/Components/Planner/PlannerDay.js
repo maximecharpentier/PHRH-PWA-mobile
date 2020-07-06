@@ -1,42 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Button, Icon } from "react-native-elements";
+import { useNavigation, NavigationContainer } from '@react-navigation/native';
+
 
 const PlannerDay = ({hotels}) => {
-  
-  
-  // const hotels = [
-  //   {
-  //     name: "Lafayette",
-  //     zip: 75010,
-  //     isUrgence: true,
-  //   },
-  //   {
-  //     name: "Lafayette",
-  //     zip: 75010,
-  //     isUrgence: false,
-  //   },
-  //   {
-  //     name: "Lafayette",
-  //     zip: 75010,
-  //     isUrgence: false,
-  //   },
-  //   {
-  //     name: "Lafayette",
-  //     zip: 75010,
-  //     isUrgence: true,
-  //   },
-  //   {
-  //     name: "Lafayette",
-  //     zip: 75010,
-  //     isUrgence: false,
-  //   },
-  //   {
-  //     name: "Lafayette",
-  //     zip: 75010,
-  //     isUrgence: true,
-  //   },
-  // ];
+  const navigation = useNavigation();
   return (
     <View>
       <View style={styles.header}>
@@ -49,7 +18,7 @@ const PlannerDay = ({hotels}) => {
       </View>
       <View style={styles.days}>
         {hotels.map((l, i) => (
-          <View key={i} style={styles.dayCard}>
+          <TouchableOpacity onPress={() => navigation.navigate('Hotel')} key={i} style={styles.dayCard}>
             <View style={styles.center1}>
               <Text style={styles.hotelName}>{l.name}</Text>
               <Text style={styles.hotelZip}>{l.zip}</Text>
@@ -72,7 +41,7 @@ const PlannerDay = ({hotels}) => {
                 />
               </View>
             ) : null}
-          </View>
+          </TouchableOpacity>
         ))}
       </View>
     </View>

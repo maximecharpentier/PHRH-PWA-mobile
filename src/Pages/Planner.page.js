@@ -4,10 +4,11 @@ import { StyleSheet, View, ScrollView, Text } from "react-native";
 import PlannerHeader from "../Components/Planner/PlannerHeader";
 import PlannerDays from "../Components/Planner/PlannerDays";
 
+
 import Constants from 'expo-constants';
 
 
-export default function AuthPage() {
+export default function PlannerPage() {
   return (
     <ScrollView style={styles.view}>
       <PlannerHeader/>
