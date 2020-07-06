@@ -11,11 +11,11 @@ export default function Header() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
+    width: "100%",
     alignItems: "center",
     backgroundColor: "#031772",
     padding: 15,
+    paddingTop: 35,
   },
   logo: {
     width: 130,
