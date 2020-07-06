@@ -1,39 +1,10 @@
-import * as React from "react";
-import { useState } from 'react';
+import React, { Component } from 'react'
 import { StyleSheet, View, ScrollView, Image, Text, TextInput, Alert } from "react-native";
 import { CheckBox, Button } from "react-native-elements";
 
 import Header from "../Components/Helpers/Header";
-// import AuthForm from "../Components/Forms/AuthForm";
 
-export default function AuthPage() {
-  const [isClicked, setIsClicked] = useState(false);
-  const hotelList = ['Lafayette', 'Turbigo', 'Clauzel', 'Riviera', 'Excelsior', 'Le Prado', 'Marclau'];
-  return (
-    <View style={styles.view}>
-      <Header />
-      <View style={styles.content}>
-        <Image style={styles.backArrow} source={require("./../assets/back.png")} />
-        <Text style={styles.h1}>Sélectionnez les hôtels que vous n'avez pas pu visiter aujourd'hui</Text>
-        {/* <AuthForm /> */}
-      </View>
-      <ScrollView style={styles.scrollView}>
-      {hotelList.map(function(name, index) {
-        return <View style={styles.input}>
-        <CheckBox key={index} title={name} checked={isClicked} onPress={() => { isClicked ? setIsClicked(false) : setIsClicked(true) }} />
-        {isClicked ? <TextInput style={styles.textInput} placeholder="Indiquer la raison..." multiline={true} numberOfLines={4} /> : <View/>}
-        </View>;
-      })}
-      <Button
-        title="Valider"
-        buttonStyle={{ ...rawStyles.button }}
-        titleStyle={{ ...rawStyles.buttonText }}
-        onPress={() => Alert.alert('Votre sélection a bien été enregistrée')}
-      />
-      </ScrollView>
-    </View>
-  );
-}
+const hotelList = ['Lafayette', 'Turbigo', 'Clauzel', 'Riviera', 'Excelsior', 'Le Prado', 'Marclau']
 
 const rawStyles = {
   container: { marginBottom: 20 },
@@ -78,3 +49,65 @@ const styles = StyleSheet.create({
     marginRight: 15
   }
 });
+
+class test extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { 
+      checked: false,
+      hotelChecked: []
+    };
+  }
+
+  onPress = (value) => {
+    if (this.state.hotelChecked.includes(value)) {
+      this.setState(prevState => ({
+        hotelChecked: [...prevState.hotelChecked.filter(hotel => hotel !== value)]
+      }));
+    } else {
+      this.setState(prevState => ({
+        hotelChecked: [...prevState.hotelChecked, value]
+      }))
+    }
+  }
+
+  renderHotels = () => {
+    return hotelList.map((hotel, index) => { 
+      return(
+        <View key = { hotel }> 
+         <CheckBox
+            title = { hotel }
+            checked = { this.state.hotelChecked.includes(index)  }
+            onPress = { () => this.onPress(index) }
+          />
+          {this.state.hotelChecked.includes(index) ? <TextInput style={styles.textInput} placeholder="Indiquer la raison..." multiline={true} numberOfLines={4} /> : <View/>}
+        </View>
+      ) 
+    })
+  }
+
+  render(){
+    return(
+      <View style={styles.view}>
+        <Header />
+        <View style={styles.content}>
+        <Image style={styles.backArrow} source={require("./../assets/back.png")} />
+        <Text style={styles.h1}>Sélectionnez les hôtels que vous n'avez pas pu visiter aujourd'hui</Text>
+        {/* <AuthForm /> */}
+      </View>
+        <ScrollView style={styles.scrollView}>
+          { this.renderHotels() }
+          <Button
+            title="Valider"
+            buttonStyle={{ ...rawStyles.button }}
+            titleStyle={{ ...rawStyles.buttonText }}
+            onPress={() => Alert.alert('Votre sélection a bien été enregistrée')}
+          />
+        </ScrollView>
+      </View>
+    )
+  }
+}
+
+export default test;
