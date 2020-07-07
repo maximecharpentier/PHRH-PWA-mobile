@@ -1,13 +1,19 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, ScrollView, AsyncStorage } from "react-native";
 import { Icon, Button } from "react-native-elements";
 import { MyAppText, textStyles } from "../Texts/MyAppText";
 import {AuthContext} from "../../App"
+import {API} from '../../utils/api';
 
 export default function ProfileInfos() {
     const [useOwnVehicule, setUseOwnVehicule] = useState(false);
-    const { infos } = React.useContext(AuthContext);
-    // const userInfos = JSON.parse(infos)
+    const { infos, token } = React.useContext(AuthContext);
+    useEffect(() => {
+        API.get("/users").then(res => {
+          console.log(res.data)
+        })
+      }, []);
+    
     return (
         <View elevation={3} style={styles.cardInfos}>
             <View style={[styles.flexContent, styles.firstFlexContent]}>
