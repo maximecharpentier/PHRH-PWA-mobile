@@ -1,6 +1,7 @@
 import * as React from "react";
-import { Platform, StyleSheet, Text, View, Image, AppRegistry } from "react-native";
+import { Platform, StyleSheet, Text, View, Image, AppRegistry, AsyncStorage } from "react-native";
 import { Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons';
+import {API} from "./utils/api"
 
 import {
   useFonts,
@@ -27,6 +28,7 @@ import NotificationPage from "./Pages/Notification.page"
 import HotelPage from "./Pages/Hotel.page";
 import MemosPage from "./Pages/Memos.page";
 
+export const AuthContext = React.createContext();
 
 const Tab = createBottomTabNavigator();
 
@@ -58,20 +60,102 @@ const App = () => {
     Poppins_900Black,
   });
 
-  const [isLoggin, setIsLoggin] = React.useState(true)
 
+
+  React.useEffect(() => {
+    // Fetch the token from storage then navigate to our appropriate place
+    const bootstrapAsync = async () => {
+      let userToken;
+      let userInfos;
+
+      try {
+        userToken = await AsyncStorage.getItem('userToken');
+        userInfos = await AsyncStorage.getItem('userInfos');
+      } catch (e) {
+        // Restoring token failed
+        console.log("failed")
+      }
+      
+      dispatch({ type: 'RESTORE_TOKEN', token: userToken, infos: JSON.parse(userInfos)});
+    };
+
+    bootstrapAsync();
+  }, []);
+
+  const [state, dispatch] = React.useReducer(
+    (prevState, action) => {
+      switch (action.type) {
+        case 'RESTORE_TOKEN':
+          return {
+            ...prevState,
+            userToken: action.token,
+            userInfos: action.infos,
+            isLoading: false,
+          };
+        case 'SIGN_IN':
+          return {
+            ...prevState,
+            isSignout: false,
+            userToken: action.token,
+            userInfos: action.infos,
+          };
+        case 'SIGN_OUT':
+          return {
+            ...prevState,
+            isSignout: true,
+            userToken: null,
+            userInfos: null,
+          };
+      }
+    },
+    {
+      isLoading: true,
+      isSignout: false,
+      userToken: null,
+      userInfos: null,
+    }
+  );
+
+  const authContext = React.useMemo(
+    () => ({
+      signIn: async data => {
+        API.post('auth/login/', data).then((response) => {
+          console.log(response)
+          dispatch({ type: 'SIGN_IN', token: response.data.token, infos: response.data.user});
+          AsyncStorage.setItem('userToken', response.data.token);
+          AsyncStorage.setItem('userInfos', JSON.stringify(response.data.user));
+        }).catch(error => {
+          console.log(error.response)
+        });
+      },
+      signOut: async () =>{
+        AsyncStorage.clear();
+        dispatch({ type: 'SIGN_OUT' })
+      },
+    }),
+    []
+  );
+
+  
 
   if (!fontsLoaded) {
     return <AppLoading />;
   }
 
+  console.log(state)
+
   return (
-    <>
+    <AuthContext.Provider value={{signIn: authContext.signIn, signOut: authContext.signOut, token: state.userToken, infos: state.userInfos}}>
       <Header />
       <NavigationContainer>
-        {!isLoggin ? (
+        {state.userToken == null ? (
           <SignIn.Navigator>
-            <SignIn.Screen name="Se connecter" component={AuthPage} />
+            <SignIn.Screen name="SignIn"
+              component={AuthPage}
+              options={{
+                title: 'Sign in',
+                animationTypeForReplace: 'push',
+              }} />
           </SignIn.Navigator>
         ) : (
             <Tab.Navigator
@@ -117,17 +201,10 @@ const App = () => {
             </Tab.Navigator>
           )}
       </NavigationContainer>
-    </>
+    </AuthContext.Provider>
   )
 }
 
 
 
 export default App;
-
-// const styles = StyleSheet.create({
-//   view: {
-//     backgroundColor: "#FAFAFA",
-//     height: "100vh"
-//   },
-// });

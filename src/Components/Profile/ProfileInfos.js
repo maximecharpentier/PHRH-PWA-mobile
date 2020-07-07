@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { Icon, Button } from "react-native-elements";
 import { MyAppText, textStyles } from "../Texts/MyAppText";
+import {AuthContext} from "../../App"
 
 export default function ProfileInfos() {
     const [useOwnVehicule, setUseOwnVehicule] = useState(false);
+    const { infos } = React.useContext(AuthContext);
+    // const userInfos = JSON.parse(infos)
     return (
         <View elevation={3} style={styles.cardInfos}>
             <View style={[styles.flexContent, styles.firstFlexContent]}>
@@ -18,11 +21,11 @@ export default function ProfileInfos() {
             <View style={[styles.flexContent, styles.mt20]}>
                 <View style={styles.flexContentFirstChild}>
                     <MyAppText style={styles.label}>Binôme</MyAppText>
-                    <MyAppText style={styles.text}>Prénom Nom</MyAppText>
+                    <MyAppText style={styles.text}>{infos.prenom} {infos.nom}</MyAppText>
                 </View>
                 <View style={styles.flexContentSecondChild}>
                     <MyAppText style={styles.label}>Secteur</MyAppText>
-                    <MyAppText style={styles.text}>75</MyAppText>
+                    <MyAppText style={styles.text}>{infos.secteur}</MyAppText>
                 </View>
             </View>
             <View style={[styles.flexContent, styles.mt20]}>
