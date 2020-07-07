@@ -1,83 +1,52 @@
-import * as React from "react";
+import React, { useState } from 'react';
 import { View } from "react-native";
 import PlannerDay from "./PlannerDay";
 
-const planning = {
-  150620: [
+export default function PlannerDays(props) {
+  const [days, setDays] = useState([
     {
-      name: "Lafayette",
-      zip: 75010,
-      isUrgence: true,
+      id: 1,
+      label: 'Lun.',
+      date: ''
     },
     {
-      name: "Lafayette",
-      zip: 75010,
-      isUrgence: false,
+      id: 2,
+      label: 'Mar.',
+      date: ''
     },
     {
-      name: "Lafayette",
-      zip: 75010,
-      isUrgence: false,
+      id: 3,
+      label: 'Mer.',
+      date: ''
     },
     {
-      name: "Lafayette",
-      zip: 75010,
-      isUrgence: true,
+      id: 4,
+      label: 'Jeu.',
+      date: ''
     },
     {
-      name: "Lafayette",
-      zip: 75010,
-      isUrgence: false,
-    },
-    {
-      name: "Lafayette",
-      zip: 75010,
-      isUrgence: true,
-    },
-  ],
-  160620: [
-    {
-      name: "Lafayette",
-      zip: 75010,
-      isUrgence: false,
-    },
-    {
-      name: "Lafayette",
-      zip: 75010,
-      isUrgence: false,
-    },
-    {
-      name: "Lafayette",
-      zip: 75010,
-      isUrgence: true,
-    },
-    {
-      name: "Lafayette",
-      zip: 75010,
-      isUrgence: true,
-    },
-    {
-      name: "Lafayette",
-      zip: 75010,
-      isUrgence: false,
-    },
-    {
-      name: "Lafayette",
-      zip: 75010,
-      isUrgence: true,
-    },
-  ],
-}
+      id: 5,
+      label: 'Ven.',
+      date: ''
+    }
+  ])
 
-export default function PlannerDays() {
+  const getDay = (dateString) => {
+    const dates = props.isNextWeek ? props.nextWeek : props.currentWeek;
+    if (dates.length) {
+      return dateString.replace(/2020-[0-1][0-9]-/g, '')
+    } else {
+      return "00"
+    }
+  }
+
   return (
     <>
-    {/* {Object.values(planning).map((x, i) => {
-       */}
-      <PlannerDay hotels={planning[150620]}/>
-      <PlannerDay hotels={planning[160620]}/>
-    {/* })} */}
-      
+      {days.map((day, id) => <PlannerDay
+        key={id}
+        label={day.label}
+        date={getDay(props.isNextWeek ? props.nextWeek[id] : props.currentWeek[id])}
+        fullDate={props.isNextWeek ? props.nextWeek[id] : props.currentWeek[id]} />)}
     </>
   );
 }

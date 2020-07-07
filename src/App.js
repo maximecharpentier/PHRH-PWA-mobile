@@ -72,7 +72,6 @@ const App = () => {
         userToken = await AsyncStorage.getItem('userToken');
         userInfos = await AsyncStorage.getItem('userInfos');
       } catch (e) {
-        // Restoring token failed
         console.log("failed")
       }
       
@@ -135,14 +134,6 @@ const App = () => {
     }),
     []
   );
-
-  
-
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  }
-
-  console.log(state)
 
   return (
     <AuthContext.Provider value={{signIn: authContext.signIn, signOut: authContext.signOut, token: state.userToken, infos: state.userInfos}}>

@@ -1,29 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import { useNavigation, NavigationContainer } from '@react-navigation/native';
+import { AuthContext } from "../../App"
+import { API } from "../../utils/api"
 
 
-const PlannerDay = ({hotels}) => {
+const PlannerDay = ({ fullDate, label, date }) => {
   const navigation = useNavigation();
+  const { infos } = React.useContext(AuthContext);
+  const [visits, setVisits] = useState([])
+
+  useEffect(() => {
+    API.get(`gestion/visites/get/foruser/${infos._id}`).then(res => {
+      setVisits(res.data)
+    })
+  }, [infos]);
+
   return (
     <View>
       <View style={styles.header}>
         <View style={styles.center1}>
-          <Text style={styles.day}>Mer. 13</Text>
+          <Text style={styles.day}>{label} {date}</Text>
         </View>
         <View style={styles.center2}>
           <Text style={styles.chambers}>00 chambres</Text>
         </View>
       </View>
       <View style={styles.days}>
-        {hotels.map((l, i) => (
+        {visits.filter(visit => visit !== null && visit.date_visite.slice(0, 10) == fullDate).map((hotel, i) => hotel !== null && (
           <TouchableOpacity onPress={() => navigation.navigate('Hotel')} key={i} style={styles.dayCard}>
             <View style={styles.center1}>
-              <Text style={styles.hotelName}>{l.name}</Text>
-              <Text style={styles.hotelZip}>{l.zip}</Text>
+              <Text style={styles.hotelName}>{hotel.hotel_id.nom}</Text>
+              <Text style={styles.hotelZip}>{hotel.hotel_id.cp}</Text>
             </View>
-            {l.isUrgence ? (
+            {hotel.isUrgence ? (
               <View style={styles.center2}>
                 <Button
                   title="Urgence"
@@ -41,8 +52,7 @@ const PlannerDay = ({hotels}) => {
                 />
               </View>
             ) : null}
-          </TouchableOpacity>
-        ))}
+          </TouchableOpacity>))}
       </View>
     </View>
   );
