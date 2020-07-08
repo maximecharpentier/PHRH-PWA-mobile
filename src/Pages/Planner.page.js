@@ -13,7 +13,7 @@ export default function PlannerPage() {
     let currentDay = new Date()
     let Week = []
 
-    for (let i = 2; i <= 6; i++) {
+    for (let i = 1; i <= 5; i++) {
       let firstDayOfTheWeek = currentDay.getDate() - currentDay.getDay() + i
       let newDay = new Date(currentDay.setDate(firstDayOfTheWeek)).toISOString().slice(0, 10)
       currentWeek.push(newDay)
@@ -26,7 +26,7 @@ export default function PlannerPage() {
     currentDay.setDate(currentDay.getDate() + 7);
     let Week = []
 
-    for (let i = 2; i <= 6; i++) {
+    for (let i = 1; i <= 5; i++) {
       let firstDayOfTheWeek = currentDay.getDate() - currentDay.getDay() + i
       let newDay = new Date(currentDay.setDate(firstDayOfTheWeek)).toISOString().slice(0, 10)
       nextWeek.push(newDay)

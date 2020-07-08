@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TextInput, ScrollView } from "react-native";
 import { Icon, Button } from "react-native-elements";
-import {API} from "../../utils/api"
+import { API } from "../../utils/api"
+import { useNavigation, NavigationContainer } from '@react-navigation/native';
 
-export default function Hotel() {
+export default function Hotel({ hotel }) {
 
   const [hotelInformations, setHotelInformations] = useState({
     adress: "26 Avenue Descartes",
@@ -16,45 +17,39 @@ export default function Hotel() {
     availableRooms: 10,
     urgencyDescription: "Les occupants de la chambre ont constatés des traces de moisissure. Ils affirment que le logement est plein d’humidité, l’air ne circule pas correctement."
   })
-
-  const [users, setUsers] = useState([])
-
-  useEffect(() => {
-    API.get("/users").then(res => {
-      console.log(res.data)
-    })
-  });
+  const navigation = useNavigation();
 
   return (
     <ScrollView style={styles.hotel}>
-      {/* <View style={styles.header}>
+      <View style={styles.header}>
         <Button
+          onPress={navigation.goBack}
           buttonStyle={styles.headerButton}
           icon={<Icon style={styles.headerIcon} name="angle-left" type="font-awesome-5" size={23} />}
         />
-        <Text style={styles.headerTitle}>Lafayette</Text>
-      </View> */}
+        <Text style={styles.headerTitle}>{hotel.nom}</Text>
+      </View>
       <Text style={styles.hotelTitle}>Informations sur l'hôtel</Text>
       <View style={styles.card}>
         <View style={styles.cardContainerFix}>
           <View style={styles.cardItemLarge}>
             <Text style={styles.cardTitle}>Adresse</Text>
-            <Text style={styles.cardText}>{hotelInformations.adress}</Text>
-            <Text style={styles.cardText}>{hotelInformations.zipcode} {hotelInformations.city}</Text>
+            <Text style={styles.cardText}>{hotel.adresse}</Text>
+            <Text style={styles.cardText}>{hotel.cp} {hotel.ville}</Text>
           </View>
           <View style={styles.cardItemSmall}>
             <Text style={styles.cardTitle}>Secteur</Text>
-            <Text style={styles.cardText}>{hotelInformations.sector}</Text>
+            <Text style={styles.cardText}>{hotel.cp}</Text>
           </View>
         </View>
         <View style={styles.cardContainer}>
           <View style={styles.cardItemLarge}>
             <Text style={styles.cardTitle}>Note de la dernière visite</Text>
-            <Text style={styles.cardText}>{hotelInformations.currentNotation}</Text>
+            <Text style={styles.cardText}>{hotel.note}</Text>
           </View>
           <View style={styles.cardItemSmall}>
             <Text style={styles.cardTitle}>Dernière visite</Text>
-            <Text style={styles.cardText}>{hotelInformations.lastVisit}</Text>
+            <Text style={styles.cardText}>{hotel.last_time_visited.slice(0, 10)}</Text>
           </View>
         </View>
         <View style={styles.cardContainerLastChild}>

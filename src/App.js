@@ -43,7 +43,7 @@ const SignIn = createStackNavigator();
 
 function HomeStackScreen() {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator headerMode={"none"}>
       <HomeStack.Screen name="Planning" component={PlannerPage} />
       <HomeStack.Screen name="Hotel" component={HotelPage} />
     </HomeStack.Navigator>

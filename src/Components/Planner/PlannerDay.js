@@ -17,6 +17,8 @@ const PlannerDay = ({ fullDate, label, date }) => {
     })
   }, [infos]);
 
+  console.log(visits)
+
   return (
     <View>
       <View style={styles.header}>
@@ -29,7 +31,7 @@ const PlannerDay = ({ fullDate, label, date }) => {
       </View>
       <View style={styles.days}>
         {visits !== "Aucune visite pour cet user" && visits.filter(visit => visit !== null && visit !== undefined && visit.date_visite.slice(0, 10) == fullDate).map((hotel, i) => hotel !== null && (
-          <TouchableOpacity onPress={() => navigation.navigate('Hotel')} key={i} style={styles.dayCard}>
+          <TouchableOpacity onPress={() => navigation.navigate('Hotel', {hotel: hotel.hotel_id,})} key={i} style={styles.dayCard}>
             <View style={styles.center1}>
               <Text style={styles.hotelName}>{hotel.hotel_id.nom}</Text>
               <Text style={styles.hotelZip}>{hotel.hotel_id.cp}</Text>
