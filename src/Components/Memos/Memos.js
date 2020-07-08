@@ -1,66 +1,72 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Icon, Button } from "react-native-elements";
 
-export default function Memos() {
-  return (
-    <View style={styles.memos}>
-      <View style={styles.memosHeader}>
-        <Text style={styles.memosTitle}>Mes mémos</Text>
-        <Button
-          buttonStyle={styles.memosButton}
-          title="Trier"
-          titleStyle={styles.memosButtonText}
-          icon={<Icon style={styles.memosButtonIcon} name="angle-down" type="font-awesome-5" size={20} />}
-        />
+class Memos extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      hotels: [],
+      isSuccessful: false
+    }
+  }
+
+  componentDidMount() {
+    API.get('hotels/')
+      .then((response) => {
+
+        const hotels = response.data
+        const hotelsWithMemos = []
+
+        for (let i = 0; i < hotels.length; i++) {
+          if ((Array.isArray(hotels[i].memos) && hotels[i].memos.length)) {
+            hotelsWithMemos.push(hotel[i])
+          }
+        }
+
+        this.setState({
+          hotels: hotelsWithMemos,
+          isSuccessful: true
+        });
+
+      })
+      .catch(error => {
+        console.log(error);
+        this.setState(prevState => ({
+          ...prevState,
+          isSuccessful: false
+        }));
+      });
+  }
+
+  render() {
+    return (
+      <View style={styles.memos}>
+        <View style={styles.memosHeader}>
+          <Text style={styles.memosTitle}>Mes mémos</Text>
+          <Button
+            buttonStyle={styles.memosButton}
+            title="Trier"
+            titleStyle={styles.memosButtonText}
+            icon={<Icon style={styles.memosButtonIcon} name="angle-down" type="font-awesome-5" size={20} />}
+          />
+        </View>
+        <View style={styles.memosContainer}>
+          <View style={styles.memo}>
+            <View style={styles.memoContainer}>
+              <Text style={styles.memoName} numberOfLines={1} ellipsizeMode="tail">RivieraRivieraRivieraRivieraRivieraRivieraRivieraRiviera</Text>
+              <Text style={styles.memoDate}>13/05/2020</Text>
+            </View>
+            <Text style={styles.memoDescription}>Constatation de traces de moisissure, logement humide. Demande de chamgement de chambre effectué auprés du propriétaire.</Text>
+          </View>
+        </View>
       </View>
-      <View style={styles.memosContainer}>
-        <View style={styles.memo}>
-          <View style={styles.memoContainer}>
-            <Text style={styles.memoName} numberOfLines={1} ellipsizeMode="tail">RivieraRivieraRivieraRivieraRivieraRivieraRivieraRiviera</Text>
-            <Text style={styles.memoDate}>13/05/2020</Text>
-          </View>
-          <Text style={styles.memoDescription}>Constatation de traces de moisissure, logement humide. Demande de chamgement de chambre effectué auprés du propriétaire.</Text>
-        </View>
-        <View style={styles.memo}>
-          <View style={styles.memoContainer}>
-            <Text style={styles.memoName} numberOfLines={1} ellipsizeMode="tail">RivieraRivieraRivieraRivieraRivieraRivieraRivieraRiviera</Text>
-            <Text style={styles.memoDate}>13/05/2020</Text>
-          </View>
-          <Text style={styles.memoDescription}>Constatation de traces de moisissure, logement humide. Demande de chamgement de chambre effectué auprés du propriétaire.</Text>
-        </View>
-        <View style={styles.memo}>
-          <View style={styles.memoContainer}>
-            <Text style={styles.memoName} numberOfLines={1} ellipsizeMode="tail">RivieraRivieraRivieraRivieraRivieraRivieraRivieraRiviera</Text>
-            <Text style={styles.memoDate}>13/05/2020</Text>
-          </View>
-          <Text style={styles.memoDescription}>Constatation de traces de moisissure, logement humide. Demande de chamgement de chambre effectué auprés du propriétaire.</Text>
-        </View>
-        <View style={styles.memo}>
-          <View style={styles.memoContainer}>
-            <Text style={styles.memoName} numberOfLines={1} ellipsizeMode="tail">RivieraRivieraRivieraRivieraRivieraRivieraRivieraRiviera</Text>
-            <Text style={styles.memoDate}>13/05/2020</Text>
-          </View>
-          <Text style={styles.memoDescription}>Constatation de traces de moisissure, logement humide. Demande de chamgement de chambre effectué auprés du propriétaire.</Text>
-        </View>
-        <View style={styles.memo}>
-          <View style={styles.memoContainer}>
-            <Text style={styles.memoName} numberOfLines={1} ellipsizeMode="tail">RivieraRivieraRivieraRivieraRivieraRivieraRivieraRiviera</Text>
-            <Text style={styles.memoDate}>13/05/2020</Text>
-          </View>
-          <Text style={styles.memoDescription}>Constatation de traces de moisissure, logement humide. Demande de chamgement de chambre effectué auprés du propriétaire.</Text>
-        </View>
-        <View style={styles.memo}>
-          <View style={styles.memoContainer}>
-            <Text style={styles.memoName} numberOfLines={1} ellipsizeMode="tail">RivieraRivieraRivieraRivieraRivieraRivieraRivieraRiviera</Text>
-            <Text style={styles.memoDate}>13/05/2020</Text>
-          </View>
-          <Text style={styles.memoDescription}>Constatation de traces de moisissure, logement humide. Demande de chamgement de chambre effectué auprés du propriétaire.</Text>
-        </View>
-      </View>
-    </View>
-  )
+    )
+  }
 }
+
+export default Memos;
 
 const styles = StyleSheet.create({
   memos: {
