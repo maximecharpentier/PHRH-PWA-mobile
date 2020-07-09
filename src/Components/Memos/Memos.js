@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { Icon, Button } from "react-native-elements";
+import { API } from "./../../utils/api"
 
 class Memos extends Component {
 
@@ -20,8 +21,9 @@ class Memos extends Component {
         const hotelsWithMemos = []
 
         for (let i = 0; i < hotels.length; i++) {
-          if ((Array.isArray(hotels[i].memos) && hotels[i].memos.length)) {
-            hotelsWithMemos.push(hotel[i])
+          let hotelMemos = hotels[i].memos
+          if ((Array.isArray(hotelMemos) && hotelMemos.length)) {
+            hotelsWithMemos.push(hotels[i])
           }
         }
 
@@ -29,6 +31,8 @@ class Memos extends Component {
           hotels: hotelsWithMemos,
           isSuccessful: true
         });
+
+        console.log(this.state)
 
       })
       .catch(error => {

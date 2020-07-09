@@ -8,8 +8,10 @@ class Hotel extends Component {
 
   constructor(props) {
     super(props);
+
+    console.log(this.props.hotel._id)
+
     this.state = {
-      id: 10745398,
       inputValue: "",
       inputIsOpen: false,
       notificationIsActive: false,
@@ -42,13 +44,13 @@ class Hotel extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    const hotelId = this.state.id
+    const hotelId = this.props.hotel._id
 
     const memo = {
       message: this.state.memo
     }
 
-    API.post(`http://52.47.86.14:3001/hotels/add/${hotelId}/memo`, memo)
+    API.post(`/hotels/add/${hotelId}/memo`, memo)
       .then((response) => {
         this.displayNotification()
         this.setState(prevState => ({
@@ -66,35 +68,39 @@ class Hotel extends Component {
   };
 
   render() {
-    const navigation = useNavigation();
+
+    const hotel = this.props.hotel
+    const navigation = this.props.navigation
+
     return (
       <ScrollView style={styles.hotel}>
         <View style={styles.header}>
           <View style={styles.headerButtonContainer}>
             <Button
+              onPress={navigation.goBack}
               buttonStyle={styles.headerButton}
               icon={<Icon style={styles.headerIcon} name="angle-left" type="font-awesome-5" size={23} />}
             />
           </View>
-          <Text style={styles.headerTitle}>Lafayette</Text>
+          <Text style={styles.headerTitle}>{hotel.nom}</Text>
         </View>
         <Text style={styles.hotelTitle}>Informations sur l'hôtel</Text>
         <View style={styles.card}>
           <View style={styles.cardContainerFix}>
             <View style={styles.cardItemLarge}>
               <Text style={styles.cardTitle}>Adresse</Text>
-              <Text style={styles.cardText}>26 Avenue Descartes</Text>
-              <Text style={styles.cardText}>75619 Paris</Text>
+              <Text style={styles.cardText}>{hotel.adresse}</Text>
+              <Text style={styles.cardText}>{hotel.cp} {hotel.ville}</Text>
             </View>
             <View style={styles.cardItemSmall}>
               <Text style={styles.cardTitle}>Secteur</Text>
-              <Text style={styles.cardText}>75</Text>
+              <Text style={styles.cardText}>{hotel.cp}</Text>
             </View>
           </View>
           <View style={styles.cardContainer}>
             <View style={styles.cardItemLarge}>
               <Text style={styles.cardTitle}>Note de la dernière visite</Text>
-              <Text style={styles.cardText}>30.51</Text>
+              <Text style={styles.cardText}>{hotel.note}</Text>
             </View>
             <View style={styles.cardItemSmall}>
               <Text style={styles.cardTitle}>Dernière visite</Text>
@@ -104,15 +110,20 @@ class Hotel extends Component {
           <View style={styles.cardContainerLastChild}>
             <View style={styles.cardItemFull}>
               <Text style={styles.cardTitle}>Nombre de chambres</Text>
-              <Text style={styles.cardText}>10 occupés / 20 disponibles</Text>
+              <Text style={styles.cardText}>{hotel.occupedRooms} occupés / {hotel.availableRooms} disponibles</Text>
             </View>
           </View>
         </View>
-        <Text style={styles.hotelTitle}>Urgence</Text>
-        <View style={styles.card}>
-          <Text style={styles.cardTitleUrgency}>Descriptif de l'urgence</Text>
-          <Text style={styles.cardTextUrgency}>Les occupants de la chambre ont constatés des traces de moisissure. Ils affirment que le logement est plein d’humidité, l’air ne circule pas correctement.</Text>
-        </View>
+        { hotel.urgences ?
+          <View>
+            <Text style={styles.hotelTitle}>Urgence</Text>
+            <View style={styles.card}>
+              <Text style={styles.cardTitleUrgency}>Descriptif de l'urgence</Text>
+              <Text style={styles.cardTextUrgency}>{hotel.urgencyDescription}</Text>
+            </View>
+          </View>
+          : null
+        }
         <View style={this.state.inputIsOpen ? styles.hotelContainerHidden : styles.hotelContainer}>
           <View style={styles.button}>
             <Button
