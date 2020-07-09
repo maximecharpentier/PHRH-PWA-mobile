@@ -7,7 +7,6 @@ class Hotel extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       inputIsOpen: false,
       notificationIsActive: false,
@@ -60,10 +59,10 @@ class Hotel extends Component {
       notificationMessage = "Veuillez remplir le champ ci-dessus."
       notificationIcon = "times"
     } else if (notificationType === 'memoError') {
-      notificationMessage = "Une erreur est survenue lors de l\'enregistrement de votre mémo. Veuillez vérifier l'état de votre connection internet."
+      notificationMessage = "Une erreur est survenue lors de l\'enregistrement de votre mémo. Veuillez vérifier l'état de votre connexion internet."
       notificationIcon = "times"
     } else if (notificationType === 'urgencyLoadingError') {
-      notificationMessage = "Une erreur est survenue lors du chargement des urgences liées à cet hôtel. Veuillez vérifier l'état de votre connection internet."
+      notificationMessage = "Une erreur est survenue lors du chargement des urgences liées à cet hôtel. Veuillez vérifier l'état de votre connexion internet."
       notificationIcon = "times"
     }
 
@@ -107,11 +106,9 @@ class Hotel extends Component {
             isSuccessful: false
         }));
       });
-
     } else {
       this.handleNotification('memoEmpty')
     }
-
   };
 
   render() {
@@ -458,4 +455,4 @@ const rawStyles = {
       backgroundColor: "#031772"
     },
   }
-};
+}

@@ -3,7 +3,7 @@ import { AsyncStorage } from "react-native";
 
 // axios.defaults.headers.common.Authorization = await AsyncStorage.getItem('userToken');
 const API = axios.create({
-  baseURL: 'http://15.236.20.198:3000/',
+  baseURL: 'http://localhost:3001/',
     headers: {
         'Content-Type': 'application/json',
     },
