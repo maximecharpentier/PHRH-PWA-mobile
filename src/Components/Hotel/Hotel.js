@@ -9,12 +9,13 @@ class Hotel extends Component {
     super(props);
 
     this.state = {
-      inputValue: "",
       inputIsOpen: false,
       notificationIsActive: false,
-      isSuccessful: false,
+      notificationMessage: "",
+      notificationIcon: "",
       memo: "",
-      urgences: []
+      urgences: [],
+      lastTimeVisited: new Date(this.props.hotel.last_time_visited)
     }
   }
 
@@ -28,13 +29,15 @@ class Hotel extends Component {
       })
     })
     .catch(error => {
-      console.log(error.response);
+      handleNotification('urgencyLoadingError')
     });
   }
 
   handleToggle() {
     this.setState(prevState => ({
-      inputIsOpen: !prevState.inputIsOpen
+      ...prevState,
+      inputIsOpen: !prevState.inputIsOpen,
+      memo: ""
     }));
   }
 
@@ -45,36 +48,70 @@ class Hotel extends Component {
     }))
   }
 
-  displayNotification() {
+  handleNotification(notificationType) {
+
+    let notificationMessage = ""
+    let notificationIcon = ""
+
+    if (notificationType === 'memoSuccess') {
+      notificationMessage = "Votre mémo a été enregistré."
+      notificationIcon = "check"
+    } else if (notificationType === 'memoEmpty') {
+      notificationMessage = "Veuillez remplir le champ ci-dessus."
+      notificationIcon = "times"
+    } else if (notificationType === 'memoError') {
+      notificationMessage = "Une erreur est survenue lors de l\'enregistrement de votre mémo. Veuillez vérifier l'état de votre connection internet."
+      notificationIcon = "times"
+    } else if (notificationType === 'urgencyLoadingError') {
+      notificationMessage = "Une erreur est survenue lors du chargement des urgences liées à cet hôtel. Veuillez vérifier l'état de votre connection internet."
+      notificationIcon = "times"
+    }
+
     this.setState(prevState => ({
       ...prevState,
-      notificationIsActive: !prevState.notificationIsActive
+      notificationIsActive: true,
+      notificationMessage: notificationMessage,
+      notificationIcon: notificationIcon
     }));
+
+    setTimeout(() => {
+      this.setState(prevState => ({
+        ...prevState,
+        notificationIsActive: false,
+        notificationMessage: ''
+      }));
+    }, 5000)
   }
 
   handleSubmit = event => {
     event.preventDefault();
 
-    const hotelId = this.props.hotel._id
+    if (this.state.memo !== '') {
 
-    const memo = {
-      message: this.state.memo
-    }
+      const hotelId = this.props.hotel._id
+      const memo = { message: this.state.memo }
 
-    API.post(`/hotels/add/${hotelId}/memo`, memo)
-      .then((response) => {
-        this.displayNotification()
-        this.setState(prevState => ({
-          ...prevState,
-          isSuccessful: true
-        }));
-      })
-      .catch(error => {
-        this.setState(prevState => ({
-          ...prevState,
-          isSuccessful: false
+      API.post(`/hotels/add/${hotelId}/memo`, memo)
+        .then((response) => {
+          this.handleNotification('memoSuccess')
+          this.setState(prevState => ({
+            ...prevState,
+            isSuccessful: true
+          }));
+          this.handleToggle()
+        })
+        .catch(error => {
+          this.handleNotification('memoError')
+          this.setState(prevState => ({
+            ...prevState,
+            isSuccessful: false
         }));
       });
+
+    } else {
+      this.handleNotification('memoEmpty')
+    }
+
   };
 
   render() {
@@ -114,13 +151,13 @@ class Hotel extends Component {
             </View>
             <View style={styles.cardItemSmall}>
               <Text style={styles.cardTitle}>Dernière visite</Text>
-              <Text style={styles.cardText}>{hotel.last_time_visited !== null ? hotel.last_time_visited.slice(0, 10) : null}</Text>
+              <Text style={styles.cardText}>{hotel.last_time_visited !== null ? `${this.state.lastTimeVisited.getDate()}/${this.state.lastTimeVisited.getMonth() + 1}/${this.state.lastTimeVisited.getFullYear()}` : "--"}</Text>
             </View>
           </View>
           <View style={styles.cardContainerLastChild}>
             <View style={styles.cardItemFull}>
               <Text style={styles.cardTitle}>Nombre de chambres</Text>
-              <Text style={styles.cardText}>{hotel.occupedRooms} occupés / {hotel.availableRooms} disponibles</Text>
+              <Text style={styles.cardText}>32 occupés / 8 disponibles</Text>
             </View>
           </View>
         </View>
@@ -129,7 +166,7 @@ class Hotel extends Component {
           <View key={id}>
             <Text style={styles.hotelTitle}>Urgence</Text>
             <View style={styles.card}>
-              <Text style={styles.cardTitleUrgency}>Descriptif de l'urgence</Text>
+              <Text style={styles.cardTitleUrgency}>Descriptif de \'urgence</Text>
               <Text style={styles.cardTextUrgency}>{urgence.detail}</Text>
             </View>
           </View>
@@ -156,6 +193,7 @@ class Hotel extends Component {
             numberOfLines={4}
             multiline={true}
             name="memo"
+            value={this.state.memo}
             onChangeText={text => {
               this.handleChange(text)
             }}
@@ -184,8 +222,21 @@ class Hotel extends Component {
           </View>
         </View>
         <View style={this.state.notificationIsActive ? styles.notification : styles.hidden}>
-          <Icon style={styles.notificationIcon} color="#222222" name="check" type="font-awesome-5" size={12} />
-          <Text style={styles.notificationText}>{this.state.isSuccessful ? "Votre mémo a été enregistré." : "Une erreur est survenue lors de l'enregistrement de votre mémo."}</Text>
+          <Icon
+            style={this.state.notificationIcon === "check" ? styles.notificationIcon : styles.hidden}
+            color="#222222"
+            name="check"
+            type="font-awesome-5"
+            size={12}
+          />
+          <Icon
+            style={this.state.notificationIcon === "times" ? styles.notificationIcon : styles.hidden}
+            color="#222222"
+            name="times"
+            type="font-awesome-5"
+            size={12}
+          />
+          <Text style={styles.notificationText}>{this.state.notificationMessage}</Text>
         </View>
       </ScrollView>
     )
@@ -325,7 +376,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
   notification: {
-    display: "none",
     flex: 1,
     backgroundColor: "#222222",
     borderRadius: 4,
@@ -333,21 +383,21 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     paddingTop: 8,
     paddingBottom: 8,
-    marginLeft: "auto",
+    marginLeft: -112,
     marginRight: "auto",
     flexDirection: "row",
     alignItems: "center",
-    // position: "fixed",
+    position: "fixed",
     bottom: 88,
     left: "50%",
-    transform: [{ translate: "translateX(-50%)" }],
     width: 224
   },
   notificationIcon: {
     backgroundColor: "#FFF",
     borderRadius: 50,
     borderWidth: 2,
-    borderColor: "#FFF"
+    borderColor: "#FFF",
+    width: 16
   },
   notificationText: {
     color: "#FFF",
