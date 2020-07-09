@@ -16,8 +16,23 @@ class Hotel extends Component {
       inputIsOpen: false,
       notificationIsActive: false,
       isSuccessful: false,
-      memo: ""
+      memo: "",
+      urgences: []
     }
+  }
+
+  componentDidMount(){
+    API.get('urgences')
+    .then((response) => {
+      let urgences = response.data
+      urgences = urgences.filter(urgence => urgence.hotel_id === this.props.hotel._id)
+      this.setState({
+        urgences
+      })
+    })
+    .catch(error => {
+      console.log(error.response);
+    });
   }
 
   handleToggle() {
@@ -104,7 +119,7 @@ class Hotel extends Component {
             </View>
             <View style={styles.cardItemSmall}>
               <Text style={styles.cardTitle}>Dernière visite</Text>
-              <Text style={styles.cardText}>{hotel.last_time_visited.slice(0, 10)}</Text>
+              <Text style={styles.cardText}>{hotel.last_time_visited !== null ? hotel.last_time_visited.slice(0, 10) : null}</Text>
             </View>
           </View>
           <View style={styles.cardContainerLastChild}>
@@ -114,14 +129,16 @@ class Hotel extends Component {
             </View>
           </View>
         </View>
-        { hotel.urgences ?
-          <View>
+        { this.state.urgences.length !== 0 ?
+        this.state.urgences.map( (urgence, id) =>
+          <View key={id}>
             <Text style={styles.hotelTitle}>Urgence</Text>
             <View style={styles.card}>
               <Text style={styles.cardTitleUrgency}>Descriptif de l'urgence</Text>
-              <Text style={styles.cardTextUrgency}>{hotel.urgencyDescription}</Text>
+              <Text style={styles.cardTextUrgency}>{urgence.detail}</Text>
             </View>
           </View>
+          )
           : null
         }
         <View style={this.state.inputIsOpen ? styles.hotelContainerHidden : styles.hotelContainer}>

@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView, AsyncStorage } from "react-native";
 import { Icon, Button } from "react-native-elements";
 import { API } from "./../../utils/api"
 
 class Memos extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -13,26 +12,32 @@ class Memos extends Component {
     }
   }
 
-  componentDidMount() {
-    API.get('hotels/')
+
+  async componentDidMount() {
+    let user = await AsyncStorage.getItem('userInfos')
+    user = JSON.parse(user)
+
+    API.get(`gestion/visites/get/foruser/${user._id}`)
       .then((response) => {
 
-        const hotels = response.data
-        const hotelsWithMemos = []
+        // const hotels = response.data
+        // const hotelsWithMemos = []
 
-        for (let i = 0; i < hotels.length; i++) {
-          let hotelMemos = hotels[i].memos
-          if ((Array.isArray(hotelMemos) && hotelMemos.length)) {
-            hotelsWithMemos.push(hotels[i])
-          }
-        }
+        // for (let i = 0; i < hotels.length; i++) {
+        //   let hotelMemos = hotels[i].memos
+        //   if ((Array.isArray(hotelMemos) && hotelMemos.length)) {
+        //     hotelsWithMemos.push(hotels[i])
+        //   }
+        // }
 
-        this.setState({
-          hotels: hotelsWithMemos,
-          isSuccessful: true
-        });
+        // this.setState({
+        //   hotels: hotelsWithMemos,
+        //   isSuccessful: true
+        // });
 
-        console.log(this.state)
+        // console.log(this.state)
+        // console.log(response.data)
+
 
       })
       .catch(error => {
@@ -45,6 +50,7 @@ class Memos extends Component {
   }
 
   render() {
+
     return (
       <ScrollView style={styles.memos}>
         <View style={styles.memosHeader}>
