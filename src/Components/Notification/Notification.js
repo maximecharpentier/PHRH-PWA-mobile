@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { Icon } from "react-native-elements";
 
+import ResumePage from "../../Pages/Resume.page";
+import { useNavigation, NavigationContainer } from '@react-navigation/native';
+
 export default function Notification() {
+  const navigation = useNavigation();
   return (
-    <View style={styles.notification}>
+    <View onPress={() => navigation.navigate('Resume')} style={styles.notification}>
       <View style={styles.notificationPoint} />
       <Text>Votre planning du XX au XX vient d'être modifié.</Text>
       <Text style={styles.date}>26 mai</Text>
@@ -13,9 +17,16 @@ export default function Notification() {
   )
 }
 
+function NotificationStackScreen() {
+  return (
+    <NotificationStack.Navigator headerMode={"none"}>
+      <NotificationStack.Screen name="Resume" component={ResumePage} />
+    </NotificationStack.Navigator>
+  );
+}
+
 const styles = StyleSheet.create({
   notification: {
-    lineHeight: 18,
     borderBottomColor: '#031772',
     borderBottomWidth: 1,
     paddingTop: 8,

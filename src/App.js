@@ -38,6 +38,8 @@ const instructions = Platform.select({
   android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
 });
 
+const NotificationStack = createStackNavigator();
+
 const HomeStack = createStackNavigator();
 
 const SignIn = createStackNavigator();
@@ -47,6 +49,7 @@ function HomeStackScreen() {
     <HomeStack.Navigator headerMode={"none"}>
       <HomeStack.Screen name="Planning" component={PlannerPage} />
       <HomeStack.Screen name="Hotel" component={HotelPage} />
+      <HomeStack.Screen name="Resume" component={ResumePage} />
     </HomeStack.Navigator>
   );
 }
@@ -190,7 +193,6 @@ const App = () => {
               <Tab.Screen name="Memo" component={MemosPage} />
               <Tab.Screen name="Profile" component={ProfilePage} />
               <Tab.Screen name="Notification" component={NotificationPage} />
-              <Tab.Screen name="Resume" component={ResumePage} />
             </Tab.Navigator>
           )}
       </NavigationContainer>

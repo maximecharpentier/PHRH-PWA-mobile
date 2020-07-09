@@ -85,16 +85,18 @@ class test extends Component {
 
   renderHotels = () => {
     return this.state.hotels.map((hotel, index) => { 
-      return(
-        <View key = { hotel }> 
-         <CheckBox
-            title = { hotel.hotel_id.nom }
-            checked = { this.state.hotelChecked.includes(index)  }
-            onPress = { () => this.onPress(index) }
-          />
-          {this.state.hotelChecked.includes(index) ? <TextInput style={styles.textInput} placeholder="Indiquer la raison..." multiline={true} numberOfLines={4} /> : <View/>}
-        </View>
-      ) 
+      if (hotel) {
+        return (
+          <View key = { hotel }> 
+          <CheckBox
+              title = { hotel.hotel_id.nom }
+              checked = { this.state.hotelChecked.includes(index)  }
+              onPress = { () => this.onPress(index) }
+            />
+            {this.state.hotelChecked.includes(index) ? <TextInput style={styles.textInput} placeholder="Indiquer la raison..." multiline={true} numberOfLines={4} /> : <View/>}
+          </View>
+        ) 
+      }
     })
   }
 
