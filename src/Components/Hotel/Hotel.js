@@ -2,14 +2,11 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, TextInput, ScrollView } from "react-native";
 import { Icon, Button } from "react-native-elements";
 import { API } from "../../utils/api"
-import { useNavigation, NavigationContainer } from '@react-navigation/native';
 
 class Hotel extends Component {
 
   constructor(props) {
     super(props);
-
-    console.log(this.props.hotel._id)
 
     this.state = {
       inputValue: "",
@@ -46,7 +43,6 @@ class Hotel extends Component {
       ...prevState,
       memo: text
     }))
-    console.log(this.state.memo)
   }
 
   displayNotification() {
@@ -74,7 +70,6 @@ class Hotel extends Component {
         }));
       })
       .catch(error => {
-        console.log(error);
         this.setState(prevState => ({
           ...prevState,
           isSuccessful: false
@@ -93,7 +88,7 @@ class Hotel extends Component {
           <View style={styles.headerButtonContainer}>
             <Button
               onPress={navigation.goBack}
-              buttonStyle={styles.headerButton}
+              buttonStyle={{ ...rawStyles.headerButton.btn }}
               icon={<Icon style={styles.headerIcon} name="angle-left" type="font-awesome-5" size={23} />}
             />
           </View>
@@ -144,8 +139,8 @@ class Hotel extends Component {
         <View style={this.state.inputIsOpen ? styles.hotelContainerHidden : styles.hotelContainer}>
           <View style={styles.button}>
             <Button
-              buttonStyle={styles.button}
-              titleStyle={styles.buttonText}
+              buttonStyle={{ ...rawStyles.button.btn }}
+              titleStyle={{ ...rawStyles.button.title }}
               icon={<Icon style={styles.buttonIcon} name="plus" type="font-awesome-5" size={10} />}
               title="Ajouter un mémo"
               onPress={() => {
@@ -168,8 +163,8 @@ class Hotel extends Component {
           <View style={styles.formButtons}>
             <View style={styles.formContainer}>
               <Button
-                buttonStyle={styles.formButtonFirstChild}
-                titleStyle={styles.formButtonFirstChildTitle}
+                buttonStyle={{ ...rawStyles.formButtonFirstChild.btn }}
+                titleStyle={{ ...rawStyles.formButtonFirstChild.title }}
                 title="Annuler"
                 onPress={() => {
                   this.handleToggle()
@@ -178,8 +173,8 @@ class Hotel extends Component {
             </View>
             <View style={styles.formContainer}>
               <Button
-                buttonStyle={styles.formButtonLastChild}
-                titleStyle={styles.formButtonLastChildTitle}
+                buttonStyle={{ ...rawStyles.formButtonLastChild.btn }}
+                titleStyle={{ ...rawStyles.formButtonLastChild.title }}
                 title="Valider"
                 onPress={() => {
                   this.handleSubmit(event)
@@ -220,11 +215,6 @@ const styles = StyleSheet.create({
   headerButtonContainer: {
     position: "absolute",
     left: "16px"
-  },
-  headerButton: {
-    backgroundColor: "transparent",
-    paddingTop: 0,
-    paddingBottom: 0
   },
   headerTitle: {
     fontSize: 16,
@@ -303,24 +293,6 @@ const styles = StyleSheet.create({
   hotelContainerHidden: {
     display: "none"
   },
-  button: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingRight: 8,
-    paddingLeft: 12,
-    paddingTop: 8,
-    paddingBottom: 8,
-    backgroundColor: "#EFF2FB",
-    borderRadius: 4
-  },
-  buttonText: {
-    fontSize: 12,
-    fontWeight: "500",
-    color: "#000",
-    paddingLeft: 12,
-    paddingTop: 0
-  },
   hidden: {
     display: "none"
   },
@@ -351,25 +323,6 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     flex: 1
-  },
-  formButtonFirstChild: {
-    width: "96%",
-    backgroundColor: "#EFF2FB"
-  },
-  formButtonLastChild: {
-    width: "96%",
-    alignSelf: "flex-end",
-    backgroundColor: "#031772"
-  },
-  formButtonFirstChildTitle: {
-    fontSize: 12,
-    fontWeight: "500",
-    color: "#111215"
-  },
-  formButtonLastChildTitle: {
-    fontSize: 12,
-    fontWeight: "500",
-    color: "#FFF"
   },
   notification: {
     display: "none",
@@ -403,3 +356,56 @@ const styles = StyleSheet.create({
     paddingLeft: 8
   }
 })
+
+const rawStyles = {
+  button: {
+    btn: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      paddingRight: 8,
+      paddingLeft: 12,
+      paddingTop: 8,
+      paddingBottom: 8,
+      backgroundColor: "#EFF2FB",
+      borderRadius: 4
+    },
+    title: {
+      fontSize: 12,
+      fontWeight: "500",
+      color: "#000",
+      paddingLeft: 12,
+      paddingTop: 0
+    }
+  },
+  headerButton: {
+    btn: {
+      backgroundColor: "transparent",
+      paddingTop: 0,
+      paddingBottom: 0
+    }
+  },
+  formButtonFirstChild: {
+    title: {
+      fontSize: 12,
+      fontWeight: "500",
+      color: "#111215"
+    },
+    btn: {
+      width: "96%",
+      backgroundColor: "#EFF2FB"
+    },
+  },
+  formButtonLastChild: {
+    title: {
+      fontSize: 12,
+      fontWeight: "500",
+      color: "#FFF"
+    },
+    btn: {
+      width: "96%",
+      alignSelf: "flex-end",
+      backgroundColor: "#031772"
+    },
+  }
+};
