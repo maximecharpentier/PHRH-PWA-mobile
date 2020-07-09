@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { Icon, Button } from "react-native-elements";
 
 class Memos extends Component {
@@ -42,7 +42,7 @@ class Memos extends Component {
 
   render() {
     return (
-      <View style={styles.memos}>
+      <ScrollView style={styles.memos}>
         <View style={styles.memosHeader}>
           <Text style={styles.memosTitle}>Mes mémos</Text>
           <Button
@@ -61,7 +61,7 @@ class Memos extends Component {
             <Text style={styles.memoDescription}>Constatation de traces de moisissure, logement humide. Demande de chamgement de chambre effectué auprés du propriétaire.</Text>
           </View>
         </View>
-      </View>
+      </ScrollView>
     )
   }
 }
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   },
   memosTitle: {
     fontSize: 16,
-    fontWeight: 500,
+    fontWeight: "500",
     color: "#031772",
     lineHeight: 24
   },
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#111215",
     paddingRight: 12,
-    order: -1
+    // order: -1
   },
   memosContainer: {
     flex: 1,
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   memoName: {
     color: "#111215",
     fontSize: 14,
-    fontWeight: 500,
+    fontWeight: "500",
     marginRight: 16
   },
   memoDate: {

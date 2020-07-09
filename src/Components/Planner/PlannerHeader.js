@@ -2,8 +2,22 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Icon, Button } from "react-native-elements";
 
-export default function PlannerHeader() {
+export default function PlannerHeader(props) {
   const [isStarted, setIsStarted] = useState(false);
+  const getFirstDay = () => {
+    if (props.currentWeek.length) {
+      return props.isNextWeek ? props.nextWeek[0].replace(/2020-[0-1][0-9]-/g, '') : props.currentWeek[0].replace(/2020-[0-1][0-9]-/g, '')
+    } else {
+      return "00"
+    }
+  }
+  const getLastDay = () => {
+    if (props.currentWeek.length) {
+      return props.isNextWeek ? props.nextWeek[4].replace(/2020-[0-1][0-9]-/g, '') : props.currentWeek[4].replace(/2020-[0-1][0-9]-/g, '')
+    } else {
+      return "00"
+    }
+  }
   return (
     <View>
       <View style={styles.header}>
@@ -27,13 +41,13 @@ export default function PlannerHeader() {
                   size={20}
                 />
               ) : (
-                <Icon
-                  name="toggle-off"
-                  type="font-awesome-5"
-                  color="#bf2f00"
-                  size={20}
-                />
-              )
+                  <Icon
+                    name="toggle-off"
+                    type="font-awesome-5"
+                    color="#bf2f00"
+                    size={20}
+                  />
+                )
             }
             onPress={() => setIsStarted(!isStarted)}
           />
@@ -42,11 +56,13 @@ export default function PlannerHeader() {
       <View style={styles.nav}>
         <View style={styles.center1}>
           <Button
+            onPress={props.getToCurrentWeek}
             buttonStyle={{ ...rawStyles.nav.btn }}
             icon={<Icon name="chevron-left" type="font-awesome-5" size={12} />}
           />
-          <Text style={styles.changeWeekText}>11 Mai - 16 Mai</Text>
+          <Text style={styles.changeWeekText}>{getFirstDay()} Mai - {getLastDay()} Mai</Text>
           <Button
+            onPress={props.getToNextWeek}
             buttonStyle={{ ...rawStyles.nav.btn }}
             icon={<Icon name="chevron-right" type="font-awesome-5" size={12} />}
           />

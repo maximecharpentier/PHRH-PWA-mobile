@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet, Text, View, TextInput, ScrollView } from "react-native";
 import { Icon, Button } from "react-native-elements";
-import axios from 'axios';
+import { API } from "../../utils/api"
+import { useNavigation, NavigationContainer } from '@react-navigation/native';
 
 class Hotel extends Component {
 
@@ -65,8 +66,9 @@ class Hotel extends Component {
   };
 
   render() {
+    const navigation = useNavigation();
     return (
-      <View style={styles.hotel}>
+      <ScrollView style={styles.hotel}>
         <View style={styles.header}>
           <View style={styles.headerButtonContainer}>
             <Button
@@ -96,7 +98,7 @@ class Hotel extends Component {
             </View>
             <View style={styles.cardItemSmall}>
               <Text style={styles.cardTitle}>Dernière visite</Text>
-              <Text style={styles.cardText}>19/04/2019</Text>
+              <Text style={styles.cardText}>{hotel.last_time_visited.slice(0, 10)}</Text>
             </View>
           </View>
           <View style={styles.cardContainerLastChild}>
@@ -162,7 +164,7 @@ class Hotel extends Component {
           <Icon style={styles.notificationIcon} color="#222222" name="check" type="font-awesome-5" size={12} />
           <Text style={styles.notificationText}>{this.state.isSuccessful ? "Votre mémo a été enregistré." : "Une erreur est survenue lors de l'enregistrement de votre mémo."}</Text>
         </View>
-      </View>
+      </ScrollView>
     )
   }
 }
@@ -354,7 +356,7 @@ const styles = StyleSheet.create({
     marginRight: "auto",
     flexDirection: "row",
     alignItems: "center",
-    position: "fixed",
+    // position: "fixed",
     bottom: 88,
     left: "50%",
     transform: [{ translate: "translateX(-50%)" }],
@@ -362,7 +364,7 @@ const styles = StyleSheet.create({
   },
   notificationIcon: {
     backgroundColor: "#FFF",
-    borderRadius: "50%",
+    borderRadius: 50,
     borderWidth: 2,
     borderColor: "#FFF"
   },

@@ -2,8 +2,14 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 
 import { Button, Input } from "react-native-elements";
+import {AuthContext} from "../../App"
 
 export default function AuthForm() {
+  const [nom, setNom] = React.useState('');
+  const [pwd, setPwd] = React.useState('');
+
+  const { signIn } = React.useContext(AuthContext);
+
   return (
     <View style={styles.container}>
      
@@ -14,6 +20,8 @@ export default function AuthForm() {
         inputContainerStyle={{ ...rawStyles.inputContainer }}
         inputStyle={{ ...rawStyles.input }}
         labelStyle={{ ...rawStyles.label }}
+        value={nom}
+        onChangeText={setNom}
       />
       <Input
         placeholder="****************"
@@ -23,11 +31,14 @@ export default function AuthForm() {
         inputStyle={{ ...rawStyles.input }}
         labelStyle={{ ...rawStyles.label }}
         secureTextEntry={true}
+        value={pwd}
+        onChangeText={setPwd}
       />
       <Button
         title="Se connecter"
         buttonStyle={{ ...rawStyles.button }}
         titleStyle={{ ...rawStyles.buttonText }}
+        onPress={() => signIn({ nom, pwd })}
       />
     </View>
   );

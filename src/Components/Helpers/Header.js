@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { Platform, StyleSheet, Text, View, Image } from "react-native";
 
 export default function Header() {
   return (
@@ -11,14 +11,14 @@ export default function Header() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    marginTop: Platform.OS === 'android' ? 20 : 0,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#031772",
-    padding: 15,
+    padding: 15
   },
   logo: {
-    width: 130,
-    height: 35,
+    width: 80,
+    height: 22,
   },
 });
