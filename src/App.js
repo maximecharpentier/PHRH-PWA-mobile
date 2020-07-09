@@ -39,8 +39,6 @@ const instructions = Platform.select({
 
 const HomeStack = createStackNavigator();
 
-const SignIn = createStackNavigator();
-
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator headerMode={"none"}>
@@ -49,6 +47,9 @@ function HomeStackScreen() {
     </HomeStack.Navigator>
   );
 }
+
+const SignIn = createStackNavigator();
+
 
 const App = () => {
   let [fontsLoaded] = useFonts({
@@ -172,6 +173,7 @@ const App = () => {
                   }
                 },
               })}
+              
               tabBarOptions={{
                 activeTintColor: '#000000',
                 inactiveTintColor: '#A1B5D8',
@@ -181,8 +183,9 @@ const App = () => {
                   borderTopColor: "#031772",
                   borderTopWidth: 1,
                   backgroundColor: '#EFF2FB'
-                }
+                },
               }}
+              
             >
               <Tab.Screen name="Home" component={HomeStackScreen} />
 

@@ -17,8 +17,6 @@ const PlannerDay = ({ fullDate, label, date }) => {
     })
   }, [infos]);
 
-  console.log(visits)
-
   return (
     <View>
       <View style={styles.header}>

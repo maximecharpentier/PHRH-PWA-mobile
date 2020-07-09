@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ScrollView, AsyncStorage } from "react-native";
+import { StyleSheet, Text, View, ScrollView, AsyncStorage, withNavigationFocus } from "react-native";
 import { Icon, Button } from "react-native-elements";
 import { API } from "./../../utils/api"
 
@@ -20,25 +20,25 @@ class Memos extends Component {
     API.get(`gestion/visites/get/foruser/${user._id}`)
       .then((response) => {
 
-        // const hotels = response.data
-        // const hotelsWithMemos = []
+        const hotels = response.data
+        const hotelsWithMemos = []
+        for (let i = 0; i < hotels.length; i++) {
 
-        // for (let i = 0; i < hotels.length; i++) {
-        //   let hotelMemos = hotels[i].memos
-        //   if ((Array.isArray(hotelMemos) && hotelMemos.length)) {
-        //     hotelsWithMemos.push(hotels[i])
-        //   }
-        // }
+          if (hotels[i]) {
+            let hotelMemos = hotels[i].hotel_id.memos
+            if ((Array.isArray(hotelMemos) && hotelMemos.length)) {
+              hotelsWithMemos.push(hotels[i].hotel_id)
+              console.log("yes")
+            } else {
+              console.log("no")
+            }
+          }
 
-        // this.setState({
-        //   hotels: hotelsWithMemos,
-        //   isSuccessful: true
-        // });
-
-        // console.log(this.state)
-        // console.log(response.data)
-
-
+        }
+        this.setState({
+          hotels: hotelsWithMemos,
+          isSuccessful: true
+        });
       })
       .catch(error => {
         console.log(error);
@@ -62,15 +62,18 @@ class Memos extends Component {
             icon={<Icon style={styles.memosButtonIcon} name="angle-down" type="font-awesome-5" size={20} />}
           />
         </View>
-        <View style={styles.memosContainer}>
-          <View style={styles.memo}>
-            <View style={styles.memoContainer}>
-              <Text style={styles.memoName} numberOfLines={1} ellipsizeMode="tail">RivieraRivieraRivieraRivieraRivieraRivieraRivieraRiviera</Text>
-              <Text style={styles.memoDate}>13/05/2020</Text>
+        {this.state.hotels.map((hotel, id) =>
+          <View key={id} style={styles.memosContainer}>
+            <View style={styles.memo}>
+              <View style={styles.memoContainer}>
+                <Text style={styles.memoName} numberOfLines={1} ellipsizeMode="tail">{hotel.nom}</Text>
+                <Text style={styles.memoDate}>{hotel.memos[0].date.slice(0, 10)}</Text>
+              </View>
+              <Text style={styles.memoDescription}>{hotel.memos[0].message}</Text>
             </View>
-            <Text style={styles.memoDescription}>Constatation de traces de moisissure, logement humide. Demande de chamgement de chambre effectué auprés du propriétaire.</Text>
           </View>
-        </View>
+        )}
+        {this.state.hotels.length === 0 || this.state.hotels.memos.length === 0 && <div>Vous n'avez pas de mémos</div>}
       </ScrollView>
     )
   }

@@ -13,6 +13,11 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "splash": {
+      "image": "./src/assets/splash-screen.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#021871"
+    },
     "description": " The companion app for PHRH-PWA ",
     "githubUrl": "https://github.com/blyndusk/PHRH-PWA-mobile"
   }
