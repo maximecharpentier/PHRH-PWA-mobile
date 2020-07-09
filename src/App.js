@@ -27,6 +27,7 @@ import ProfilePage from "./Pages/Profile.page"
 import NotificationPage from "./Pages/Notification.page"
 import HotelPage from "./Pages/Hotel.page";
 import MemosPage from "./Pages/Memos.page";
+import ResumePage from "./Pages/Resume.page";
 
 export const AuthContext = React.createContext();
 
@@ -189,6 +190,7 @@ const App = () => {
               <Tab.Screen name="Memo" component={MemosPage} />
               <Tab.Screen name="Profile" component={ProfilePage} />
               <Tab.Screen name="Notification" component={NotificationPage} />
+              <Tab.Screen name="Resume" component={ResumePage} />
             </Tab.Navigator>
           )}
       </NavigationContainer>
