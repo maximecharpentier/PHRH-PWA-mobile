@@ -23,12 +23,11 @@ export default function PlannerHeader(props) {
       <View style={styles.header}>
         <View style={styles.center1}>
           <Text style={styles.month}>Juin 2020</Text>
-          <Text style={styles.label}>Jour</Text>
         </View>
         <View style={styles.center2}>
           <Icon name="calendar-alt" type="font-awesome-5" size={18} />
           <Button
-            title={isStarted ? "Fin" : "Debut"}
+            title={isStarted ? "Finir ma journée" : "Démarrer ma journée"}
             titleStyle={{ ...rawStyles.headerBtn.title }}
             buttonStyle={{ ...rawStyles.headerBtn.btn }}
             iconRight={true}
@@ -66,9 +65,6 @@ export default function PlannerHeader(props) {
             buttonStyle={{ ...rawStyles.nav.btn }}
             icon={<Icon name="chevron-right" type="font-awesome-5" size={12} />}
           />
-        </View>
-        <View style={styles.center2}>
-          <Text style={styles.label}>Temps de trajet</Text>
         </View>
       </View>
     </View>
