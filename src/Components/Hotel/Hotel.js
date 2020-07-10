@@ -162,7 +162,7 @@ class Hotel extends Component {
           <View key={id}>
             <Text style={styles.hotelTitle}>Urgence</Text>
             <View style={styles.card}>
-              <Text style={styles.cardTitleUrgency}>Descriptif de \'urgence</Text>
+              <Text style={styles.cardTitleUrgency}>Descriptif de l'urgence</Text>
               <Text style={styles.cardTextUrgency}>{urgence.detail}</Text>
             </View>
           </View>
