@@ -14,7 +14,7 @@ import {
 } from "@expo-google-fonts/poppins";
 import { AppLoading } from "expo";
 
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useRoute } from '@react-navigation/native';
@@ -136,10 +136,18 @@ const App = () => {
     []
   );
 
+  const AppTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: '#FFFFFF',
+    },
+  };
+
   return (
     <AuthContext.Provider value={{signIn: authContext.signIn, signOut: authContext.signOut, token: state.userToken, infos: state.userInfos}}>
       <Header />
-      <NavigationContainer>
+      <NavigationContainer theme={AppTheme}>
         {state.userToken == null ? (
           <SignIn.Navigator>
             <SignIn.Screen name="SignIn"

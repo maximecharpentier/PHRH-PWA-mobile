@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ScrollView, AsyncStorage, withNavigationFocus } from "react-native";
+import { StyleSheet, Text, View, ScrollView, AsyncStorage } from "react-native";
 import { Icon, Button } from "react-native-elements";
 import { API } from "./../../utils/api"
-import { Dimensions } from 'react-native'
 
 class Memos extends Component {
   constructor(props) {
@@ -10,8 +9,7 @@ class Memos extends Component {
     this.state = {
       hotels: [],
       isSuccessful: false,
-      notificationIsActive: false,
-      screenHeight: Dimensions.get("window").height
+      notificationIsActive: false
     }
   }
 
@@ -34,12 +32,13 @@ class Memos extends Component {
             }
           }
         }
-
+        
         this.setState({
           hotels: hotelsWithMemos
         });
-      })
 
+      })
+      
       .catch(error => {
         this.setState(prevState => ({
           ...prevState,
@@ -54,6 +53,13 @@ class Memos extends Component {
       });
   }
 
+  handleSort() {
+    this.setState(prevState => ({
+      ...prevState,
+      hotels: this.state.hotels.reverse()
+    }));
+  }
+
   render() {
     return (
       <ScrollView style={styles.memos}>
@@ -64,6 +70,7 @@ class Memos extends Component {
             title="Trier"
             titleStyle={{ ...rawStyles.memosButton.title }}
             icon={<Icon style={styles.memosButtonIcon} name="angle-down" type="font-awesome-5" size={20} />}
+            onPress={() => this.handleSort()}
           />
         </View>
         {this.state.hotels.map((hotel, id) =>
@@ -77,8 +84,8 @@ class Memos extends Component {
             </View>
           </View>
         )}
-        {/*this.state.hotels.length === 0 || this.state.hotels.memos.length === 0 && <View>Vous n'avez pas de mémos</View>*/}
-        <View style={this.state.notificationIsActive ? styles.notification : styles.notification}>
+        {!this.state.hotels.length ? <Text styles={styles.emptyState}>Vous n'avez pas de mémos</Text> : null }
+        <View style={this.state.notificationIsActive ? styles.notification : styles.hidden}>
           <Icon
             style={styles.notificationIcon}
             color="#222222"
@@ -160,6 +167,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#222222",
     borderRadius: 4,
+    position: "fixed",
+    left: "50%",
     paddingLeft: 16,
     paddingRight: 16,
     paddingTop: 8,
@@ -183,6 +192,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "500",
     paddingLeft: 8
+  },
+  emptyState: {
+    fontSize: 24,
+    fontWeight: "500",
+    color: "#031772"
   }
 })
 
@@ -195,7 +209,8 @@ const rawStyles = {
     title: {
       fontSize: 12,
       color: "#111215",
-      paddingRight: 12
+      paddingRight: 12,
+      order: -1
     }
   }
 };
