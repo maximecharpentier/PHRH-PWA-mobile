@@ -84,7 +84,7 @@ class Memos extends Component {
             </View>
           </View>
         )}
-        {!this.state.hotels.length ? <Text styles={styles.emptyState}>Vous n'avez pas de mémos</Text> : null }
+        {!this.state.hotels.length ? <Text style={styles.emptyState}>Vous n'avez pas de mémos</Text> : null }
         <View style={this.state.notificationIsActive ? styles.notification : styles.hidden}>
           <Icon
             style={styles.notificationIcon}
@@ -194,9 +194,11 @@ const styles = StyleSheet.create({
     paddingLeft: 8
   },
   emptyState: {
-    fontSize: 24,
-    fontWeight: "500",
-    color: "#031772"
+    fontSize: 16,
+    color: "#031772",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: 64
   }
 })
 
