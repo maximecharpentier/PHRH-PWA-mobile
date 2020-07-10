@@ -35,9 +35,6 @@ const PlannerDay = ({ fullDate, label, date }) => {
         <View style={styles.center1}>
           <Text style={styles.day}>{label} {date}</Text>
         </View>
-        <View style={styles.center2}>
-          <Text style={styles.chambers}>00 chambres</Text>
-        </View>
       </View>
       <View style={styles.days}>
         {visits !== "Aucune visite pour cet user" && visits.filter(visit => visit !== null && visit !== undefined && visit.date_visite.slice(0, 10) == fullDate).map((hotel, i) => hotel !== null && (

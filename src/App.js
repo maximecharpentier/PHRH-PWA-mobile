@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Platform, StyleSheet, Text, View, Image, AppRegistry, AsyncStorage } from "react-native";
 import { Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons';
-import {API} from "./utils/api"
+import { API } from "./utils/api"
 
 import {
   useFonts,
@@ -26,6 +26,7 @@ import ProfilePage from "./Pages/Profile.page"
 import NotificationPage from "./Pages/Notification.page"
 import HotelPage from "./Pages/Hotel.page";
 import MemosPage from "./Pages/Memos.page";
+import ResumePage from "./Pages/Resume.page";
 
 export const AuthContext = React.createContext();
 
@@ -36,6 +37,16 @@ const instructions = Platform.select({
   android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
 });
 
+const NotificationStack = createStackNavigator();
+
+function NotificationStackScreen() {
+  return (
+    <NotificationStack.Navigator headerMode={"none"}>
+      <NotificationStack.Screen name="Notification" component={NotificationPage} />
+      <NotificationStack.Screen name="Resume" component={ResumePage} />
+    </NotificationStack.Navigator>
+  );
+}
 const HomeStack = createStackNavigator();
 
 function HomeStackScreen() {
@@ -74,8 +85,8 @@ const App = () => {
       } catch (e) {
         console.log("failed")
       }
-      
-      dispatch({ type: 'RESTORE_TOKEN', token: userToken, infos: JSON.parse(userInfos)});
+
+      dispatch({ type: 'RESTORE_TOKEN', token: userToken, infos: JSON.parse(userInfos) });
     };
 
     bootstrapAsync();
@@ -120,14 +131,14 @@ const App = () => {
       signIn: async data => {
         API.post('auth/login/', data).then((response) => {
           console.log(response)
-          dispatch({ type: 'SIGN_IN', token: response.data.token, infos: response.data.user});
+          dispatch({ type: 'SIGN_IN', token: response.data.token, infos: response.data.user });
           AsyncStorage.setItem('userToken', response.data.token);
           AsyncStorage.setItem('userInfos', JSON.stringify(response.data.user));
         }).catch(error => {
           console.log(error.response)
         });
       },
-      signOut: async () =>{
+      signOut: async () => {
         AsyncStorage.clear();
         dispatch({ type: 'SIGN_OUT' })
       },
@@ -144,14 +155,14 @@ const App = () => {
   };
 
   return (
-    <AuthContext.Provider value={{signIn: authContext.signIn, signOut: authContext.signOut, token: state.userToken, infos: state.userInfos}}>
+    <AuthContext.Provider value={{ signIn: authContext.signIn, signOut: authContext.signOut, token: state.userToken, infos: state.userInfos }}>
       <Header />
       <NavigationContainer theme={AppTheme}>
         {state.userToken == null ? (
           <SignIn.Navigator>
             <SignIn.Screen name="SignIn"
               component={AuthPage}
-              
+
               options={{
                 title: 'Sign in',
                 animationTypeForReplace: 'push',
@@ -169,7 +180,7 @@ const App = () => {
                     iconName = 'tags';
                   } else if (route.name === 'Profile') {
                     iconName = 'account-circle';
-                  } else if (route.name === 'Notification') {
+                  } else if (route.name === 'NotificationPage') {
                     iconName = 'md-notifications';
                   }
                   if (route.name === 'Profile') {
@@ -181,7 +192,7 @@ const App = () => {
                   }
                 },
               })}
-              
+
               tabBarOptions={{
                 activeTintColor: '#000000',
                 inactiveTintColor: '#A1B5D8',
@@ -193,13 +204,13 @@ const App = () => {
                   backgroundColor: '#EFF2FB'
                 },
               }}
-              
+
             >
               <Tab.Screen name="Home" component={HomeStackScreen} />
 
               <Tab.Screen name="Memo" component={MemosPage} />
               <Tab.Screen name="Profile" component={ProfilePage} />
-              <Tab.Screen name="Notification" component={NotificationPage} />
+              <Tab.Screen name="NotificationPage" component={NotificationStackScreen} />
             </Tab.Navigator>
           )}
       </NavigationContainer>
