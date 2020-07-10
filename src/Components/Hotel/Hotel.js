@@ -377,7 +377,7 @@ const styles = StyleSheet.create({
     marginRight: "auto",
     flexDirection: "row",
     alignItems: "center",
-    position: "fixed",
+    position: "absolute",
     bottom: 88,
     left: "50%",
     width: 224

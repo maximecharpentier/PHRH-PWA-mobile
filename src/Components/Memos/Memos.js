@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#222222",
     borderRadius: 4,
-    position: "fixed",
+    position: "absolute",
     left: "50%",
     paddingLeft: 16,
     paddingRight: 16,

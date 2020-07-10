@@ -1,20 +1,11 @@
-import * as React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import React, { Component } from "react";
+import { StyleSheet, View, ScrollView, Text } from "react-native";
 
 import Notification from "../Components/Notification/Notification"
 import { useNavigation, NavigationContainer } from '@react-navigation/native';
 
-export default function NotificationPage() {
-  const navigation = useNavigation();
-  return (
-    <View style={styles.view}>
-      <View style={styles.banner}>
-        <Text style={styles.bannerText}>Notifications</Text>
-      </View>
-      <Notification />
-    </View>
-  );
-}
+import { AsyncStorage } from "react-native";
+import { API } from '../utils/api'
 
 const styles = StyleSheet.create({
   h1: {
@@ -47,3 +38,51 @@ const styles = StyleSheet.create({
     lineHeight: 24
   }
 });
+
+  // const navigation = useNavigation();
+
+class NotificationPage extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { 
+      notifs: {}
+    };
+  }
+
+  async componentDidMount() {
+    let user = await AsyncStorage.getItem('userInfos')
+    user = JSON.parse(user)
+
+    API.get(`/notifications/push/valid_semaine/${user._id}`).then(res => {
+      this.setState({notifs: res.data})
+      console.log(res.data)
+    })
+  }
+
+  // renderNotifs = () => {
+  //   return (
+  //     <View key = { this.state.notifs._id }>
+  //       <Text>{this.state.notifs.elem.message}</Text>
+  //     </View>
+  //   ))
+  // }
+
+  render() {
+    console.log(this.state.notifs)
+    return (
+      <View style={styles.view}>
+        <View style={styles.banner}>
+          <Text style={styles.bannerText}>Notifications</Text>
+        </View>
+        <ScrollView>
+        <View>
+          {this.state.notifs && <Text>{this.state.notifs.elem.message}</Text>}
+        </View>
+        </ScrollView>
+      </View>
+    )
+  }
+}
+
+export default NotificationPage;

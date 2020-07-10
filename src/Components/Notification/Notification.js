@@ -11,7 +11,7 @@ export default function Notification() {
     <TouchableOpacity onPress={() => navigation.navigate('Resume')} style={styles.notification}>
       <View style={styles.notificationPoint} />
       <Text>Votre planning du XX au XX vient d'être modifié.</Text>
-      <Text style={styles.date}>10 juillet</Text>
+      <Text numberOfLines={1} style={styles.date}>10 juillet</Text>
       <Icon style={styles.arrow} name="chevron-right" type="font-awesome-5" size={12} />
     </TouchableOpacity>
   )
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     borderRadius: 100
   },
   date: {
-    whiteSpace: "nowrap",
+    width: 50,
     marginLeft: 16,
     marginRight: 16
   },

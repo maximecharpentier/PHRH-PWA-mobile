@@ -5,8 +5,6 @@ import { CheckBox, Button, Icon } from "react-native-elements";
 import { AsyncStorage } from "react-native";
 import { API } from "../utils/api"
 
-const hotelList = ['Lafayette', 'Turbigo', 'Clauzel', 'Riviera', 'Excelsior', 'Le Prado', 'Marclau']
-
 const rawStyles = {
   container: { marginBottom: 20 },
   inputContainer: { background: "#F3F3F3" },
@@ -58,6 +56,7 @@ class ResumePage extends Component {
     this.state = { 
       checked: false,
       hotelChecked: [],
+      listChecked: [],
       hotels: []
     };
   }
@@ -66,7 +65,7 @@ class ResumePage extends Component {
     let user = await AsyncStorage.getItem('userInfos')
     user = JSON.parse(user)
 
-    API.get(`gestion/visites/get/foruser/${user._id}`).then(res => {
+    API.get(`/gestion/visites/cr/hotel/planned/foruser/${user._id}`).then(res => {
       this.setState({hotels: res.data})
     })
   }
@@ -74,14 +73,42 @@ class ResumePage extends Component {
   onPress = (value) => {
     if (this.state.hotelChecked.includes(value)) {
       this.setState(prevState => ({
-        hotelChecked: [...prevState.hotelChecked.filter(hotels => hotels !== value)]
+        hotelChecked: [...prevState.hotelChecked.filter(hotels => hotels !== value)],
+        listChecked: [...prevState.listChecked.filter(hotel => hotel.visite_id !== value)],
       }));
     } else {
       this.setState(prevState => ({
-        hotelChecked: [...prevState.hotelChecked, value]
+        hotelChecked: [...prevState.hotelChecked, value],
+        listChecked: [...prevState.listChecked, { visite_id: value, raison: "" }],
       }))
     }
+    console.log(this.state.listChecked)
   }
+
+  handleChange = (_id) => {
+    const name = event.target && event.target.name;
+    const value = event.target && event.target.value;
+    this.setState(prevState => ({
+      listChecked: prevState.listChecked.map(obj => (obj.visite_id === _id ? Object.assign(obj, { raison: value }) : obj))
+    }));
+  }
+
+  validateHotels = () => {
+    let user = localStorage.getItem('userInfos')
+    user = JSON.parse(user)
+    let visite = {"visitesToCancel": this.state.listChecked}
+    API.post(`/gestion/visites/cr/hotel/cancel/many/foruser/${user._id}`, visite).then(res => {
+      console.log(res)
+      Alert.alert(
+      "Succès",
+      "Informations enregistrées",
+      [
+        { text: "OK", onPress: () => navigation.navigate('Home') }
+      ],
+      { cancelable: false }
+    );
+    })
+  } 
 
   renderHotels = () => {
     return this.state.hotels.map((hotel) => { 
@@ -93,7 +120,7 @@ class ResumePage extends Component {
               checked = { this.state.hotelChecked.includes(hotel._id)  }
               onPress = { () => this.onPress(hotel._id) }
             />
-            {this.state.hotelChecked.includes(hotel._id) ? <TextInput style={styles.textInput} placeholder="Indiquer la raison..." multiline={true} numberOfLines={4} /> : <View/>}
+            {this.state.hotelChecked.includes(hotel._id) ? <TextInput name={hotel._id} onChangeText={() => this.handleChange(hotel._id)} value={this.state.listChecked[hotel._id]} style={styles.textInput} placeholder="Indiquer la raison..." multiline={true} numberOfLines={4} /> : <View/>}
           </View>
         ) 
       }
@@ -110,12 +137,13 @@ class ResumePage extends Component {
       </View>
         <ScrollView style={styles.scrollView}>
           { this.renderHotels() }
+          { this.state.hotels &&
           <Button
             title="Valider"
             buttonStyle={{ ...rawStyles.button }}
             titleStyle={{ ...rawStyles.buttonText }}
-            onPress={() => Alert.alert('Votre sélection a bien été enregistrée')}
-          />
+            onPress={this.validateHotels}
+          /> }
         </ScrollView>
       </View>
     )
