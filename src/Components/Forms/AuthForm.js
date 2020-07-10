@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 54
+    marginBottom: 65
   },
   loginTitle: {
     fontWeight: "600",
