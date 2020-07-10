@@ -143,6 +143,7 @@ const App = () => {
           <SignIn.Navigator>
             <SignIn.Screen name="SignIn"
               component={AuthPage}
+              
               options={{
                 title: 'Sign in',
                 animationTypeForReplace: 'push',
