@@ -5,13 +5,13 @@ import { Icon } from "react-native-elements";
 import ResumePage from "../../Pages/Resume.page";
 import { useNavigation, NavigationContainer } from '@react-navigation/native';
 
-export default function Notification() {
+export default function Notification({read, desc, date}) {
   const navigation = useNavigation();
   return (
     <TouchableOpacity onPress={() => navigation.navigate('Resume')} style={styles.notification}>
-      <View style={styles.notificationPoint} />
-      <Text>Votre planning du XX au XX vient d'être modifié.</Text>
-      <Text numberOfLines={1} style={styles.date}>10 juillet</Text>
+      {!read && <View style={styles.notificationPoint} />}
+      <Text style={styles.desc} numberOfLines={2}>{desc}</Text>
+      <Text numberOfLines={2} style={styles.date}>{date}</Text>
       <Icon style={styles.arrow} name="chevron-right" type="font-awesome-5" size={12} />
     </TouchableOpacity>
   )
@@ -37,11 +37,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#FAFAFA",
   },
+  desc: {
+    marginLeft: 16
+  },
   notificationPoint: {
     width: 8,
     height: 8,
     marginLeft: 16,
-    marginRight: 16,
     backgroundColor: "#EA2430",
     borderRadius: 100
   },

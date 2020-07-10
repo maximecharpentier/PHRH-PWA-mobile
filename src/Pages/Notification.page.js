@@ -76,9 +76,10 @@ class NotificationPage extends Component {
           <Text style={styles.bannerText}>Notifications</Text>
         </View>
         <ScrollView>
-        <View>
-          {this.state.notifs && <Text>{this.state.notifs.elem.message}</Text>}
-        </View>
+          {this.state.notifs.elem && <Notification read={this.state.notifs.read} date={this.state.notifs.date_insert && this.state.notifs.date_insert} desc={this.state.notifs.elem && this.state.notifs.elem.message}/> }
+        {/* <View>
+          {this.state.notifs.elem && <Text>{this.state.notifs.elem.message}</Text>}
+        </View> */}
         </ScrollView>
       </View>
     )
