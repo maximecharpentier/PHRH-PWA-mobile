@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, TextInput, ScrollView } from "react-native";
+import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from "react-native";
 import { Icon, Button } from "react-native-elements";
 import { API } from "../../utils/api"
 
@@ -19,8 +19,7 @@ class Hotel extends Component {
   }
 
   componentDidMount(){
-    API.get('urgences')
-    .then((response) => {
+    API.get('urgences').then((response) => {
       let urgences = response.data
       urgences = urgences.filter(urgence => urgence.hotel_id === this.props.hotel._id)
       this.setState({
@@ -131,11 +130,11 @@ class Hotel extends Component {
         <Text style={styles.hotelTitle}>Informations sur l'hôtel</Text>
         <View style={styles.card}>
           <View style={styles.cardContainerFix}>
-            <View style={styles.cardItemLarge}>
+            <TouchableOpacity style={styles.cardText} onPress={() => Linking.openURL('google.navigation:q=100+101')} style={styles.cardItemLarge}>
               <Text style={styles.cardTitle}>Adresse</Text>
               <Text style={styles.cardText}>{hotel.adresse}</Text>
               <Text style={styles.cardText}>{hotel.cp} {hotel.ville}</Text>
-            </View>
+            </TouchableOpacity>
             <View style={styles.cardItemSmall}>
               <Text style={styles.cardTitle}>Secteur</Text>
               <Text style={styles.cardText}>{hotel.cp}</Text>

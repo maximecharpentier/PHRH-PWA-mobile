@@ -22,7 +22,7 @@ export default function PlannerHeader(props) {
     <View>
       <View style={styles.header}>
         <View style={styles.center1}>
-          <Text style={styles.month}>Mai 2020</Text>
+          <Text style={styles.month}>Juin 2020</Text>
           <Text style={styles.label}>Jour</Text>
         </View>
         <View style={styles.center2}>
@@ -60,7 +60,7 @@ export default function PlannerHeader(props) {
             buttonStyle={{ ...rawStyles.nav.btn }}
             icon={<Icon name="chevron-left" type="font-awesome-5" size={12} />}
           />
-          <Text style={styles.changeWeekText}>{getFirstDay()} Mai - {getLastDay()} Mai</Text>
+          <Text style={styles.changeWeekText}>{getFirstDay()} Juin - {getLastDay()} Juin</Text>
           <Button
             onPress={props.getToNextWeek}
             buttonStyle={{ ...rawStyles.nav.btn }}
