@@ -1,11 +1,8 @@
 import * as React from "react";
 import { StyleSheet, View, Text } from "react-native";
 
-import Header from "../Components/Helpers/Header";
 import Notification from "../Components/Notification/Notification"
 import { useNavigation, NavigationContainer } from '@react-navigation/native';
-
-import ResumePage from "./Resume.page";
 
 export default function NotificationPage() {
   const navigation = useNavigation();
@@ -14,17 +11,8 @@ export default function NotificationPage() {
       <View style={styles.banner}>
         <Text style={styles.bannerText}>Notifications</Text>
       </View>
-      <Text onPress={() => navigation.navigate('Resume')}>Test</Text>
-      <Notification desc="coucou" />
+      <Notification />
     </View>
-  );
-}
-
-function NotificationStackScreen() {
-  return (
-    <NotificationStack.Navigator headerMode={"none"}>
-      <NotificationStack.Screen name="Resume" component={ResumePage} />
-    </NotificationStack.Navigator>
   );
 }
 

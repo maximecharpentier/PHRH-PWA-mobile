@@ -5,7 +5,6 @@ import { MyAppText, textStyles } from "../Texts/MyAppText";
 
 export default function ProfileInfos({firstUser, secondUser, team}) {
     const [useOwnVehicule, setUseOwnVehicule] = useState(false);
-    console.log(team)
     return (
         <View elevation={3} style={styles.cardInfos}>
             <View style={[styles.flexContent, styles.firstFlexContent]}>
@@ -31,10 +30,6 @@ export default function ProfileInfos({firstUser, secondUser, team}) {
                     <MyAppText style={styles.label}>Plage horaire</MyAppText>
                     <MyAppText style={styles.text}>{team && team[0].equipe.plage_h}</MyAppText>
                 </View>
-                {/* <View style={styles.flexContentSecondChild}>
-                    <MyAppText style={styles.label}>Véhicule</MyAppText>
-                    <MyAppText style={styles.text}></MyAppText>
-                </View> */}
             </View>
             <View style={[styles.flexContent, styles.mt20]}>
                 <View style={styles.flexContentSecondChild}>

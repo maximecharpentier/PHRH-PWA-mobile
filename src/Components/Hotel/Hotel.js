@@ -150,12 +150,6 @@ class Hotel extends Component {
               <Text style={styles.cardText}>{hotel.last_time_visited !== null ? `${this.state.lastTimeVisited.getDate()}/${this.state.lastTimeVisited.getMonth() + 1}/${this.state.lastTimeVisited.getFullYear()}` : "--"}</Text>
             </View>
           </View>
-          <View style={styles.cardContainerLastChild}>
-            <View style={styles.cardItemFull}>
-              <Text style={styles.cardTitle}>Nombre de chambres</Text>
-              <Text style={styles.cardText}>32 occupés / 8 disponibles</Text>
-            </View>
-          </View>
         </View>
         { this.state.urgences.length !== 0 ?
         this.state.urgences.map( (urgence, id) =>
