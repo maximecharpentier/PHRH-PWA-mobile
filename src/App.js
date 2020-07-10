@@ -159,10 +159,9 @@ const App = () => {
       <Header />
       <NavigationContainer theme={AppTheme}>
         {state.userToken == null ? (
-          <SignIn.Navigator>
+          <SignIn.Navigator headerMode="none">
             <SignIn.Screen name="SignIn"
               component={AuthPage}
-
               options={{
                 title: 'Sign in',
                 animationTypeForReplace: 'push',
