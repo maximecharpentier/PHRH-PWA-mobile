@@ -21,8 +21,6 @@ const Day = ({ hotel }) => {
             });
     }, []);
 
-    console.log(hotel)
-
     return (
         <TouchableOpacity onPress={() => navigation.navigate('Hotel', { hotel: hotel.hotel_id, })} style={styles.dayCard}>
             <View style={styles.center1}>

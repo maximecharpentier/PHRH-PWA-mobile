@@ -25,7 +25,7 @@ const PlannerDay = ({ fullDate, label, date }) => {
       })
     })
     .catch(error => {
-      console.log(error.response);
+      console.log(error);
     });
   }, [infos]);
 

@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from "react";
-import { StyleSheet, View, Text, ScrollView, Button } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from "react-native";
 
 import ProfileHeader from '../Components/Profile/ProfileHeader'
 import ProfileInfos from '../Components/Profile/ProfileInfos'
 import ProfileSchedule from '../Components/Profile/ProfileSchedule'
 
-import {AuthContext} from "../App"
+import { AuthContext } from "../App"
 import { API } from '../utils/api'
 
 export default function ProfilePage() {
@@ -19,10 +19,10 @@ export default function ProfilePage() {
     API.get(`gestion/equipes/`).then(res => {
       let firstUser = res.data.filter(firstUser => firstUser.equipe.user_a_id === infos._id)
       let secondUser = res.data.filter(secondUser => secondUser.equipe.user_b_id === infos._id)
-      if(firstUser.length > 0){
+      if (firstUser.length > 0) {
         setTeam(firstUser)
         setUser_a(true)
-      } else if (secondUser.length > 0){
+      } else if (secondUser.length > 0) {
         setTeam(secondUser)
         setUser_b(true)
       } else {
@@ -31,10 +31,12 @@ export default function ProfilePage() {
     })
   }, []);
   return (
-    <ScrollView style={styles.view} contentContainerStyle={{flexGrow:1}}>
+    <ScrollView style={styles.view} contentContainerStyle={{ flexGrow: 1 }}>
       <ProfileHeader title="Profil" />
       <ProfileInfos firstUser={user_a} secondUser={user_b} team={team} />
-      <Button title="Deconnexion" onPress={() => signOut()}>Deconnexion</Button>
+      <TouchableOpacity
+        style={styles.logOutButton}
+        onPress={() => signOut()}><Text style={styles.logOutButtonTitle}>Deconnexion</Text></TouchableOpacity>
     </ScrollView>
   );
 }
@@ -44,4 +46,18 @@ const styles = StyleSheet.create({
     height: 100,
     backgroundColor: "#FAFAFA",
   },
+  logOutButton: {
+    marginTop: "30px",
+    width: "210px",
+    alignSelf: "center",
+    backgroundColor: "#031772",
+    paddingVertical: "17px",
+    borderRadius: 5
+  },
+  logOutButtonTitle: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#FFF",
+    textAlign: "center"
+  }
 });

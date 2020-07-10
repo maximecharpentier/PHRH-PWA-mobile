@@ -1,10 +1,14 @@
 import * as React from "react";
 import { Platform, StyleSheet, Text, View, Image } from "react-native";
+import { useNavigationState } from '@react-navigation/native';
 
-export default function Header() {
+
+
+
+const Header = ({ isInLogin }) => {
   return (
-    <View style={styles.container}>
-      <Image style={styles.logo} source={require("../../assets/logo.png")} />
+    <View style={[styles.container, {paddingVertical: isInLogin ? '35px' : '15px' }]}>
+      <Image style={{width: isInLogin ? 105 : 80, height: isInLogin ? 28 : 22 }} source={require("../../assets/logo.png")} />
     </View>
   );
 }
@@ -15,10 +19,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#031772",
-    padding: 15
-  },
-  logo: {
-    width: 80,
-    height: 22,
   },
 });
+
+export default Header;

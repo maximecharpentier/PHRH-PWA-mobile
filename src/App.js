@@ -156,7 +156,7 @@ const App = () => {
 
   return (
     <AuthContext.Provider value={{ signIn: authContext.signIn, signOut: authContext.signOut, token: state.userToken, infos: state.userInfos }}>
-      <Header />
+      <Header isInLogin={state.userToken == null ? true : false } />
       <NavigationContainer theme={AppTheme}>
         {state.userToken == null ? (
           <SignIn.Navigator>
