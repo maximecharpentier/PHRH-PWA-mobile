@@ -2,12 +2,9 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, ScrollView, AsyncStorage } from "react-native";
 import { Icon, Button } from "react-native-elements";
 import { MyAppText, textStyles } from "../Texts/MyAppText";
-import {AuthContext} from "../../App"
 
-export default function ProfileInfos() {
+export default function ProfileInfos({firstUser, secondUser, team}) {
     const [useOwnVehicule, setUseOwnVehicule] = useState(false);
-    const { infos, token } = React.useContext(AuthContext);
-    
     return (
         <View elevation={3} style={styles.cardInfos}>
             <View style={[styles.flexContent, styles.firstFlexContent]}>
@@ -15,27 +12,23 @@ export default function ProfileInfos() {
                     <MyAppText style={styles.label}>Période</MyAppText>
                 </View>
                 <View style={styles.flexContentSecondChild}>
-                    <MyAppText style={styles.text}>11 au 16 mai 2020</MyAppText>
+                    <MyAppText style={styles.text}>05 au 09 juin 2020</MyAppText>
                 </View>
             </View>
             <View style={[styles.flexContent, styles.mt20]}>
                 <View style={styles.flexContentFirstChild}>
                     <MyAppText style={styles.label}>Binôme</MyAppText>
-                    <MyAppText style={styles.text}>{infos.prenom} {infos.nom}</MyAppText>
+                    <MyAppText style={styles.text}>{team && firstUser ? team[0].user_names.user_b : team && secondUser ? team[0].user_names.user_a : "vous n'avez pas de binome"}</MyAppText>
                 </View>
                 <View style={styles.flexContentSecondChild}>
                     <MyAppText style={styles.label}>Secteur</MyAppText>
-                    <MyAppText style={styles.text}>{infos.secteur}</MyAppText>
+                    <MyAppText style={styles.text}>{team && team[0].equipe.secteur_binome}</MyAppText>
                 </View>
             </View>
             <View style={[styles.flexContent, styles.mt20]}>
                 <View style={styles.flexContentFirstChild}>
                     <MyAppText style={styles.label}>Plage horaire</MyAppText>
-                    <MyAppText style={styles.text}>Matin</MyAppText>
-                </View>
-                <View style={styles.flexContentSecondChild}>
-                    <MyAppText style={styles.label}>Véhicule</MyAppText>
-                    <MyAppText style={styles.text}>Identifiant</MyAppText>
+                    <MyAppText style={styles.text}>{team && team[0].equipe.plage_h}</MyAppText>
                 </View>
             </View>
             <View style={[styles.flexContent, styles.mt20]}>

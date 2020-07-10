@@ -8,68 +8,92 @@ class Memos extends Component {
     super(props);
     this.state = {
       hotels: [],
-      isSuccessful: false
+      isSuccessful: false,
+      notificationIsActive: false
     }
   }
 
-
   async componentDidMount() {
+
     let user = await AsyncStorage.getItem('userInfos')
     user = JSON.parse(user)
 
     API.get(`gestion/visites/get/foruser/${user._id}`)
+
       .then((response) => {
+        const hotels = response.data
+        const hotelsWithMemos = []
 
-        // const hotels = response.data
-        // const hotelsWithMemos = []
-
-        // for (let i = 0; i < hotels.length; i++) {
-        //   let hotelMemos = hotels[i].memos
-        //   if ((Array.isArray(hotelMemos) && hotelMemos.length)) {
-        //     hotelsWithMemos.push(hotels[i])
-        //   }
-        // }
-
-        // this.setState({
-        //   hotels: hotelsWithMemos,
-        //   isSuccessful: true
-        // });
-
-        // console.log(this.state)
-        // console.log(response.data)
-
+        for (let i = 0; i < hotels.length; i++) {
+          if (hotels[i]) {
+            let hotelMemos = hotels[i].hotel_id.memos
+            if ((Array.isArray(hotelMemos) && hotelMemos.length)) {
+              hotelsWithMemos.push(hotels[i].hotel_id)
+            }
+          }
+        }
+        
+        this.setState({
+          hotels: hotelsWithMemos
+        });
 
       })
+      
       .catch(error => {
-        console.log(error);
         this.setState(prevState => ({
           ...prevState,
-          isSuccessful: false
+          notificationIsActive: true
         }));
+        setTimeout(() => {
+          this.setState(prevState => ({
+            ...prevState,
+            notificationIsActive: false
+          }));
+        }, 5000)
       });
   }
 
-  render() {
+  handleSort() {
+    this.setState(prevState => ({
+      ...prevState,
+      hotels: this.state.hotels.reverse()
+    }));
+  }
 
+  render() {
     return (
       <ScrollView style={styles.memos}>
         <View style={styles.memosHeader}>
           <Text style={styles.memosTitle}>Mes mémos</Text>
           <Button
-            buttonStyle={styles.memosButton}
+            buttonStyle={{ ...rawStyles.memosButton.btn }}
             title="Trier"
-            titleStyle={styles.memosButtonText}
+            titleStyle={{ ...rawStyles.memosButton.title }}
             icon={<Icon style={styles.memosButtonIcon} name="angle-down" type="font-awesome-5" size={20} />}
+            onPress={() => this.handleSort()}
           />
         </View>
-        <View style={styles.memosContainer}>
-          <View style={styles.memo}>
-            <View style={styles.memoContainer}>
-              <Text style={styles.memoName} numberOfLines={1} ellipsizeMode="tail">RivieraRivieraRivieraRivieraRivieraRivieraRivieraRiviera</Text>
-              <Text style={styles.memoDate}>13/05/2020</Text>
+        {this.state.hotels.map((hotel, id) =>
+          <View key={id} style={styles.memosContainer}>
+            <View style={styles.memo}>
+              <View style={styles.memoContainer}>
+                <Text style={styles.memoName} numberOfLines={1} ellipsizeMode="tail">{hotel.nom}</Text>
+                <Text style={styles.memoDate}>{hotel.memos[0].date.slice(0, 10)}</Text>
+              </View>
+              <Text style={styles.memoDescription}>{hotel.memos[0].message}</Text>
             </View>
-            <Text style={styles.memoDescription}>Constatation de traces de moisissure, logement humide. Demande de chamgement de chambre effectué auprés du propriétaire.</Text>
           </View>
+        )}
+        {!this.state.hotels.length ? <Text styles={styles.emptyState}>Vous n'avez pas de mémos</Text> : null }
+        <View style={this.state.notificationIsActive ? styles.notification : styles.hidden}>
+          <Icon
+            style={styles.notificationIcon}
+            color="#222222"
+            name="times"
+            type="font-awesome-5"
+            size={12}
+          />
+          <Text style={styles.notificationText}>Une erreur est survenue lors du chargement de vos mémos, veuillez vérifier votre connexion internet.</Text>
         </View>
       </ScrollView>
     )
@@ -80,8 +104,10 @@ export default Memos;
 
 const styles = StyleSheet.create({
   memos: {
+    flex: 1,
     backgroundColor: "#FAFAFA",
-    paddingBottom: 40
+    paddingBottom: 40,
+    height: 600
   },
   memosHeader: {
     flexDirection: "row",
@@ -97,16 +123,6 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "#031772",
     lineHeight: 24
-  },
-  memosButton: {
-    backgroundColor: "transparent",
-    alignItems: "center"
-  },
-  memosButtonText: {
-    fontSize: 12,
-    color: "#111215",
-    paddingRight: 12,
-    // order: -1
   },
   memosContainer: {
     flex: 1,
@@ -143,5 +159,58 @@ const styles = StyleSheet.create({
     color: "#111215",
     fontSize: 12,
     lineHeight: 18
+  },
+  hidden: {
+    display: "none"
+  },
+  notification: {
+    flex: 1,
+    backgroundColor: "#222222",
+    borderRadius: 4,
+    position: "fixed",
+    left: "50%",
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 8,
+    paddingBottom: 8,
+    marginLeft: -112,
+    marginRight: "auto",
+    flexDirection: "row",
+    alignItems: "center",
+    bottom: 88,
+    width: 224
+  },
+  notificationIcon: {
+    backgroundColor: "#FFF",
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: "#FFF",
+    width: 16
+  },
+  notificationText: {
+    color: "#FFF",
+    fontSize: 12,
+    fontWeight: "500",
+    paddingLeft: 8
+  },
+  emptyState: {
+    fontSize: 24,
+    fontWeight: "500",
+    color: "#031772"
   }
 })
+
+const rawStyles = {
+  memosButton: {
+    btn : {
+      backgroundColor: "transparent",
+      alignItems: "center"
+    },
+    title: {
+      fontSize: 12,
+      color: "#111215",
+      paddingRight: 12,
+      order: -1
+    }
+  }
+};

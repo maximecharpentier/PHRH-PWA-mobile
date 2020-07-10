@@ -1,8 +1,5 @@
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
-import { useNavigation, NavigationContainer } from '@react-navigation/native';
-
-import Header from "../Components/Helpers/Header";
+import { useNavigation } from '@react-navigation/native';
 import Hotel from "../Components/Hotel/Hotel"
 
 export default function HotelPage({route}) {
@@ -13,10 +10,3 @@ export default function HotelPage({route}) {
     <Hotel navigation={navigation} hotel={hotel} />
   );
 }
-
-const styles = StyleSheet.create({
-  hotelPage: {
-    flex: 1,
-    flexDirection: "column"
-  }
-});

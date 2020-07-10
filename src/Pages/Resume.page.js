@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class Resume extends Component {
+class ResumePage extends Component {
 
   constructor(props) {
     super(props);
@@ -104,7 +104,7 @@ class Resume extends Component {
     return(
       <View style={styles.view}>
         <View style={styles.content}>
-        <Icon style={styles.backArrow} name="chevron-left" type="font-awesome-5" size={12} />
+        <Icon onPress={() => this.props.navigation.goBack()} style={styles.backArrow} name="chevron-left" type="font-awesome-5" size={12} />
         <Text style={styles.h1}>Sélectionnez les hôtels que vous n'avez pas pu visiter aujourd'hui</Text>
         {/* <AuthForm /> */}
       </View>
@@ -122,4 +122,4 @@ class Resume extends Component {
   }
 }
 
-export default Resume;
+export default ResumePage;

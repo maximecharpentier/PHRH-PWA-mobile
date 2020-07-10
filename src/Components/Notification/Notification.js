@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
 
 import ResumePage from "../../Pages/Resume.page";
@@ -8,12 +8,12 @@ import { useNavigation, NavigationContainer } from '@react-navigation/native';
 export default function Notification() {
   const navigation = useNavigation();
   return (
-    <View onPress={() => navigation.navigate('Resume')} style={styles.notification}>
+    <TouchableOpacity onPress={() => navigation.navigate('Resume')} style={styles.notification}>
       <View style={styles.notificationPoint} />
       <Text>Votre planning du XX au XX vient d'être modifié.</Text>
-      <Text style={styles.date}>26 mai</Text>
+      <Text style={styles.date}>10 juillet</Text>
       <Icon style={styles.arrow} name="chevron-right" type="font-awesome-5" size={12} />
-    </View>
+    </TouchableOpacity>
   )
 }
 
