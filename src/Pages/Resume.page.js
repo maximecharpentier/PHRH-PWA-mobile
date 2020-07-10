@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class test extends Component {
+class Resume extends Component {
 
   constructor(props) {
     super(props);
@@ -74,7 +74,7 @@ class test extends Component {
   onPress = (value) => {
     if (this.state.hotelChecked.includes(value)) {
       this.setState(prevState => ({
-        hotelChecked: [...prevState.hotelChecked.filter(hotel => hotel !== value)]
+        hotelChecked: [...prevState.hotelChecked.filter(hotels => hotels !== value)]
       }));
     } else {
       this.setState(prevState => ({
@@ -84,16 +84,16 @@ class test extends Component {
   }
 
   renderHotels = () => {
-    return this.state.hotels.map((hotel, index) => { 
+    return this.state.hotels.map((hotel) => { 
       if (hotel) {
         return (
-          <View key = { hotel }> 
+          <View key = { hotel._id }> 
           <CheckBox
               title = { hotel.hotel_id.nom }
-              checked = { this.state.hotelChecked.includes(index)  }
-              onPress = { () => this.onPress(index) }
+              checked = { this.state.hotelChecked.includes(hotel._id)  }
+              onPress = { () => this.onPress(hotel._id) }
             />
-            {this.state.hotelChecked.includes(index) ? <TextInput style={styles.textInput} placeholder="Indiquer la raison..." multiline={true} numberOfLines={4} /> : <View/>}
+            {this.state.hotelChecked.includes(hotel._id) ? <TextInput style={styles.textInput} placeholder="Indiquer la raison..." multiline={true} numberOfLines={4} /> : <View/>}
           </View>
         ) 
       }
@@ -122,4 +122,4 @@ class test extends Component {
   }
 }
 
-export default test;
+export default Resume;
