@@ -1,20 +1,20 @@
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
-
+import { StyleSheet, View, Text } from "react-native";
 import { Button, Input } from "react-native-elements";
-import {AuthContext} from "../../App"
+import { AuthContext } from "../../App"
 
 export default function AuthForm() {
+
   const [nom, setNom] = React.useState('');
   const [pwd, setPwd] = React.useState('');
-
   const { signIn } = React.useContext(AuthContext);
 
   return (
-    <View style={styles.container}>
-     
+    <View style={styles.login}>
+      <Text style={styles.loginTitle}>Connexion</Text>
+      <Text style={styles.loginSubtitle}>Pour continuer, connectez-vous.</Text>
       <Input
-        placeholder="nom.prenom@gmail.com"
+        placeholder="Salarié 1"
         label="Nom d'utilisateur"
         containerStyle={{ ...rawStyles.container }}
         inputContainerStyle={{ ...rawStyles.inputContainer }}
@@ -22,6 +22,7 @@ export default function AuthForm() {
         labelStyle={{ ...rawStyles.label }}
         value={nom}
         onChangeText={setNom}
+        placeholderTextColor="#E0E0E0"
       />
       <Input
         placeholder="****************"
@@ -33,41 +34,81 @@ export default function AuthForm() {
         secureTextEntry={true}
         value={pwd}
         onChangeText={setPwd}
+        placeholderTextColor="#E0E0E0"
       />
-      <Button
-        title="Se connecter"
-        buttonStyle={{ ...rawStyles.button }}
-        titleStyle={{ ...rawStyles.buttonText }}
-        onPress={() => signIn({ nom, pwd })}
-      />
+      <View style={styles.buttonContainer}>
+        <Button
+          title="Se connecter"
+          buttonStyle={{ ...rawStyles.button }}
+          titleStyle={{ ...rawStyles.buttonText }}
+          onPress={() => signIn({ nom, pwd })}
+        />
+      </View>
     </View>
   );
 }
 
-const rawStyles = {
-  inputContainer: { borderColor: "#031772" },
-  container: { marginBottom: 20 },
-  input: { fontSize: 12 },
-  label: { color: "#111215", fontSize: 14 },
-  button: {
-    backgroundColor: "#031772",
-  },
-  buttonText: { borderRadius: 4, fontSize: 12, paddingHorizontal: 50 },
-};
-
 const styles = StyleSheet.create({
-  
-  container: {
-    // flex: 1,
-    justifyContent: "center",
+  login: {
+    flex: 1,
+    flexDirection: "column",
+    backgroundColor: "#FFF",
+    paddingLeft: 16,
+    paddingRight: 16,
     alignItems: "center",
-    backgroundColor: "#e5e5e5",
-    paddingHorizontal: 5,
-    paddingVertical: 10,
+    justifyContent: "center",
+    marginBottom: 54
   },
+  loginTitle: {
+    fontWeight: "600",
+    fontSize: 18,
+    lineHeight: 27,
+    textAlign: "center",
+    color: "#111215",
+    marginBottom: 8,
+    marginTop: 50
+  },
+  loginSubtitle: {
+    fontSize: 14,
+    lineHeight: 21,
+    marginBottom: 64,
+    color: "#111215",
+    textAlign: "center"
+  },
+  buttonContainer: {
+    width: 176,
+    marginLeft: "auto",
+    marginRight: "auto"
+  }
+});
 
+const rawStyles = {
+  inputContainer: {
+    borderColor: "#031772",
+    borderBottomWidth: 1
+  },
+  container: {
+    marginBottom: 32
+  },
+  input: {
+    fontSize: 12,
+    fontWeight: "500",
+    color: "#757575"
+  },
   label: {
     color: "#111215",
     fontSize: 14,
+    fontWeight: "500",
+    lineHeight: 21
   },
-});
+  button: {
+    backgroundColor: "#031772",
+    borderRadius: 4
+  },
+  buttonText: {
+    color: "#FFF",
+    fontSize: 12,
+    paddingTop: 4,
+    paddingBottom: 4
+  }
+};
