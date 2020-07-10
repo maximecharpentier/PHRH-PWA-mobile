@@ -12,7 +12,6 @@ import {
   Poppins_700Bold,
   Poppins_900Black,
 } from "@expo-google-fonts/poppins";
-import { AppLoading } from "expo";
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';

@@ -73,7 +73,6 @@ class Memos extends Component {
             </View>
           </View>
         )}
-        {this.state.hotels.length === 0 || this.state.hotels.memos.length === 0 && <div>Vous n'avez pas de mémos</div>}
       </ScrollView>
     )
   }

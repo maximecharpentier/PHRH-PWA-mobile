@@ -13,7 +13,7 @@ export default function ProfileInfos({firstUser, secondUser, team}) {
                     <MyAppText style={styles.label}>Période</MyAppText>
                 </View>
                 <View style={styles.flexContentSecondChild}>
-                    <MyAppText style={styles.text}>11 au 16 mai 2020</MyAppText>
+                    <MyAppText style={styles.text}>05 au 09 juin 2020</MyAppText>
                 </View>
             </View>
             <View style={[styles.flexContent, styles.mt20]}>

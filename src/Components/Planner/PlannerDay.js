@@ -5,6 +5,8 @@ import { useNavigation, NavigationContainer } from '@react-navigation/native';
 import { AuthContext } from "../../App"
 import { API } from "../../utils/api"
 
+import Day from './Day'
+
 
 const PlannerDay = ({ fullDate, label, date }) => {
   const navigation = useNavigation();
@@ -15,6 +17,16 @@ const PlannerDay = ({ fullDate, label, date }) => {
     API.get(`gestion/visites/get/foruser/${infos._id}`).then(res => {
       setVisits(res.data)
     })
+    API.get('urgences').then((response) => {
+      let urgences = response.data
+      urgences = urgences.filter(urgence => urgence.hotel_id === this.props.hotel._id)
+      this.setState({
+        urgences
+      })
+    })
+    .catch(error => {
+      console.log(error.response);
+    });
   }, [infos]);
 
   return (
@@ -29,30 +41,8 @@ const PlannerDay = ({ fullDate, label, date }) => {
       </View>
       <View style={styles.days}>
         {visits !== "Aucune visite pour cet user" && visits.filter(visit => visit !== null && visit !== undefined && visit.date_visite.slice(0, 10) == fullDate).map((hotel, i) => hotel !== null && (
-          <TouchableOpacity onPress={() => navigation.navigate('Hotel', {hotel: hotel.hotel_id,})} key={i} style={styles.dayCard}>
-            <View style={styles.center1}>
-              <Text style={styles.hotelName}>{hotel.hotel_id.nom}</Text>
-              <Text style={styles.hotelZip}>{hotel.hotel_id.cp}</Text>
-            </View>
-            {hotel.isUrgence ? (
-              <View style={styles.center2}>
-                <Button
-                  title="Urgence"
-                  titleStyle={{ ...rawStyles.urgence.title }}
-                  buttonStyle={{ ...rawStyles.urgence.btn }}
-                  icon={
-                    <Icon
-                      name="exclamation-triangle"
-                      type="font-awesome-5"
-                      color="#EA2430"
-                      size={12}
-                    />
-                  }
-                  onPress={() => setIsStarted(!isStarted)}
-                />
-              </View>
-            ) : null}
-          </TouchableOpacity>))}
+          <Day key={i} hotel={hotel}  />
+          ))}
       </View>
     </View>
   );
