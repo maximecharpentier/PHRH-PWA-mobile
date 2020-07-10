@@ -26,6 +26,7 @@ import ProfilePage from "./Pages/Profile.page"
 import NotificationPage from "./Pages/Notification.page"
 import HotelPage from "./Pages/Hotel.page";
 import MemosPage from "./Pages/Memos.page";
+import ResumePage from "./Pages/Resume.page";
 
 export const AuthContext = React.createContext();
 
@@ -36,6 +37,8 @@ const instructions = Platform.select({
   android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
 });
 
+const NotificationStack = createStackNavigator();
+
 const HomeStack = createStackNavigator();
 
 function HomeStackScreen() {
@@ -43,6 +46,7 @@ function HomeStackScreen() {
     <HomeStack.Navigator headerMode={"none"}>
       <HomeStack.Screen name="Planning" component={PlannerPage} />
       <HomeStack.Screen name="Hotel" component={HotelPage} />
+      <HomeStack.Screen name="Resume" component={ResumePage} />
     </HomeStack.Navigator>
   );
 }
